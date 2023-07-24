@@ -1,9 +1,228 @@
+:root{
+    --background-color: #F0F0F0;
+    --header-color: #E0E0E0;
+    --purple: #5324B9;
+    --sidebar: #F5F5F5;
+    --sidebar-font-color: rgba(0,0,0,0.75);
+    --sidebar-button-active: rgba(189,163,245,0.81)
+}
+
 *{
     box-sizing: border-box;
 }
+
+p{
+    margin: 0px;
+}
+
+@font-face {
+    font-family: 'Patua';
+    src: url('PatuaOne-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Regular.ttf');
+}
+
 
 body{
     width: 100%;
     min-height: 100vh;
     margin: 0px;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 290px 1fr;
+    background-color: var(--background-color);
+    position: relative;
+}
+
+.navbar{
+    grid-row: 1/2;
+    grid-column: 1 / 3;
+    background-color: var(--header-color);
+    display: grid;
+    grid-template-columns: 242px 1fr 242px;
+    grid-template-rows: 1fr;
+}
+
+
+
+.menuBar{
+    grid-column: 1/2;
+    justify-self: center;
+    align-self: center;
+    width: 32px;
+    height: 28px;
+    background-image: url('menuBar_icons.svg');
+    background-size: cover;
+    visibility: hidden;
+    cursor: default;
+}
+
+.title{
+    margin: 0px;
+    justify-self: center;
+    align-self: center;
+    font-family: 'Patua';
+    font-weight: normal;
+    font-size: 48px;
+    letter-spacing: calc(4 * 0.01em);
+}
+
+.title span{
+    color: #5324B9;
+}
+
+.sidebar{
+    grid-area: 2 / 1 /2 / 2;
+    background-color: var(--sidebar);
+    display: flex;
+    padding: 45px 17px;
+    flex-direction: column;
+}
+
+.sidebar > .overviewHeader,
+.sidebar > .projectHeader{
+    padding-left: 12px;
+    height: 41px;
+    font-family: 'Roboto';
+    font-size: 32px;
+    border-bottom: 1px solid #262626;
+}
+
+.overviewList{
+    height: fit-content;
+    margin: 28px 0px;
+    display: grid;
+    grid-template-rows: repeat(4,40px);
+    gap: 6px 0px;
+}
+
+.overviewList > div{
+    padding-left: 65px;
+    font-size: 20px;
+    font-family: 'Roboto';
+    background-color: var(--sidebar);
+    display: flex;
+    color: var(--sidebar-font-color);
+    align-items: center;
+    position: relative;;
+    cursor: pointer;
+}
+
+.overviewList > div:hover,
+.projectList > div:hover{
+    background-color: var(--header-color);
+}
+
+
+.overviewList > div:first-of-type > span:first-of-type{
+    background-image: url('inbox_sidebar.svg');
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    left: 27px;
+}
+
+.overviewList > div:nth-of-type(2) > span:first-of-type{
+    background-image: url('today_logo.svg');
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    left: 27px;
+}
+
+.overviewList > div:nth-of-type(3) > span:first-of-type{
+    background-image: url('week_icon.svg');
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    left: 27px;
+}
+
+.overviewList > div:nth-of-type(4) > span:first-of-type{
+    background-image: url('milestone_icon.svg');
+    width: 22px;
+    height: 26px;
+    position: absolute;
+    left: 29px;
+}
+
+.projectHeader{
+    position: relative;
+    margin-bottom: 28px;
+}
+
+.projectHeader > span{
+    position: absolute;
+    bottom: 5px;
+    background-image: url('add_project.svg');
+    background-size: cover;
+    right: 4px;
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+}
+
+.projectList{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: var(--sidebar-font-color);
+    gap: 6px;
+}
+
+.projectList > div{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    cursor: pointer;
+    padding-left: 27px;
+    position: relative;
+}
+
+.projectList > div > span:first-of-type{
+    position: absolute;
+    background-image: url('edit_icon.svg');
+    width: 24px;
+    height: 21px;
+    right: 33px;
+    bottom: 12px;
+}
+
+.projectList > div > span:nth-of-type(2){
+    position: absolute;
+    background-image: url('deleteprj_icon.svg');
+    width: 20px;
+    height: 20px;
+    right: 8px;
+    bottom: 12px;
+}
+
+.projectList > div.active,
+.overviewList > div.active{
+    background-color: var(--sidebar-button-active);
+    color: black;
+}
+
+.projectList > div.active > span:nth-of-type(3),
+.overviewList > div.active > span:nth-of-type(2){
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    width: 4px;
+    background-color: var(--purple);
+}
+
+.addButton{
+    background-image: url(bigadd_icon.svg);
+    background-position: cover;
+    position: fixed;
+    width: 68px;
+    height: 68px;
+    bottom: 53px;
+    right: 105px;
+    cursor: pointer;
 }

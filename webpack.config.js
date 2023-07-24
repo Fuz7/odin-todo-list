@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resources',
+        type: 'asset/resource',
       },
       {
         test: /\.(csv|tsv)$/i,

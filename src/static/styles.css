@@ -4,7 +4,10 @@
     --purple: #5324B9;
     --sidebar: #F5F5F5;
     --sidebar-font-color: rgba(0,0,0,0.75);
-    --sidebar-button-active: rgba(189,163,245,0.81)
+    --sidebar-button-active: rgba(189,163,245,0.81);
+    --placeholder: rgba(0,0,0,0.60);
+    --red: #D41212;
+    --gold: #FCCA19
 }
 
 *{
@@ -216,6 +219,16 @@ body{
     background-color: var(--purple);
 }
 
+.projectList > div.active > span:nth-of-type(1){
+    background-image: url('purpedit_icon.svg');
+}
+
+.projectList > div.active > span:nth-of-type(2){
+    background-image: url('reddeleteprj_icon.svg');
+}
+
+
+
 .addButton{
     background-image: url(bigadd_icon.svg);
     background-position: cover;
@@ -225,4 +238,255 @@ body{
     bottom: 53px;
     right: 105px;
     cursor: pointer;
+}
+
+.modal{
+    grid-row: 1 / 3;
+    grid-column: 1 / 3;
+    height: 100%;
+    width: 100%;
+    display: block;
+    visibility: hidden;
+    z-index: -1;
+    position: fixed;
+    background-color: rgba(0,0,0,0.25);
+}
+
+.modal.active{
+    visibility: visible;
+    z-index: 1;
+}
+
+.modal .modalAddCard{
+    transform: scale(0.5);
+    transition: transform 400ms cubic-bezier(0.18,0.89,0.43,1.19);
+}
+
+.modal.active .modalAddCard{
+    transform: scale(1);
+}
+
+.modalAddContainer{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.15);
+}
+
+.modalAddCard{
+    width: 400px;
+    height: 650px;
+    background-color: var(--sidebar); 
+    display: grid;
+    grid-template-rows: 70px 496px 84px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.modalHeader{
+    grid-row: 1/2;
+    grid-column: 1/2;
+    background-color: var(--purple);
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    justify-content: center;
+    font-size: 32px;
+    font-family: "Patua";
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.modalBody{
+    padding: 0px 35px;
+}
+
+form{
+    grid-row: 2/3;;
+}
+
+.titleAddContainer,
+.descriptionAddContainer{
+    margin-top: 58px;
+    position: relative;
+}
+
+.dateAddContainer,
+.projectAddContainer{
+    margin-top: 57px;
+    position: relative;
+}
+
+
+
+.milestoneAddContainer{
+    margin-top: 27px;
+    position: relative;
+}
+
+
+.modalBody > div > input:not([type=checkbox]),
+.modalBody > div > select,
+.milestoneAddContainer > label{
+    width: 330px;
+    height: 33px;
+    background-color: var(--background-color);
+    border: 0px;
+    border-bottom: black 1px solid;
+    border-radius: 2px;
+}
+
+.milestoneAddContainer > label{
+    background-color: var(--sidebar-font-color);
+    border: 0px;
+    display: block;
+}
+
+
+
+.titleAddContainer > label > span{
+    color: var(--red);
+}
+
+.titleAddContainer > input:focus ~ label > span,
+.titleAddContainer > input:not(:placeholder-shown) ~ label > span{
+    display: none;
+}
+
+.titleAdd ~ span,
+.dateAdd ~ span{
+    visibility: hidden;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    font-family: 'Robota';
+    color: red;
+    font-size: 14px;
+    transition: bottom 0.1s ease;
+}
+
+.titleAdd.invalid ~ span,
+.dateAdd.invalid ~ span{
+    visibility: visible;
+    bottom: -20px;
+}
+
+
+.descriptionAddContainer > textarea{
+    width: 330px;
+    height: 78px;
+    background-color: var(--background-color);
+    border: 0px;
+    border-bottom: black 1px solid;
+    border-radius: 2px;
+}
+
+
+.titleAddContainer input:focus-visible,
+.descriptionAddContainer > textarea:focus-visible,
+.dateAddContainer > input:focus-visible,
+.projectAddContainer > select:focus-visible{
+    outline: solid 2px black;
+    border-radius: 2px;
+    border-bottom: 0px;
+}
+
+.projectAddContainer > select{
+    font-size: 20px;
+    font-family: 'Patua';
+    color: var(--sidebar-font-color);
+    padding-left: 7px;
+}
+
+.titleAddContainer label,
+.descriptionAddContainer label,
+.dateAddContainer label,
+.projectAddContainer label,
+.milestoneAddContainer label > span{
+    position: absolute;
+    left: 12px;
+    top: 5px;
+    color: var(--placeholder);
+    font-family: 'Patua';
+    font-size: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease, left 0.3s ease, top 0.3s ease, border-radius 0.3s ease
+}
+
+.milestoneAddContainer label > span{
+    color: var(--background-color);
+    user-select: none;
+}
+
+.milestoneAddContainer input{
+    position: absolute;
+    right: 10px; 
+    top: 5px;
+    width: 22px;
+    height: 22px;
+    margin: 0px;
+}
+
+.milestoneAddContainer input:checked{
+    accent-color: var(--gold);
+}
+
+.milestoneAddContainer input:checked ~ label{
+    background-color: var(--purple);
+}
+
+.dateAddContainer label,
+.projectAddContainer label{
+    visibility: hidden;
+}
+
+.titleAddContainer input:focus ~ label,
+.titleAddContainer input:not(:placeholder-shown) ~ label,
+.descriptionAddContainer textarea:focus ~ label,
+.descriptionAddContainer textarea:not(:placeholder-shown) ~ label,
+.dateAddContainer input:focus ~ label,
+.projectAddContainer select:focus ~ label{
+    visibility: visible;
+    left: 0px;
+    top: -31px;
+    color: #FFFFFF;
+    border-radius: 2px;
+    padding: 2px 7px;
+    background-color: var(--sidebar-font-color);
+}
+
+
+.modalButtonContainer{
+    grid-row: 3/4;
+    background-color: rgba(0,0,0,0.05);
+    border-top: black solid 1px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 22px 25px;
+    gap: 10px;
+}
+
+.cancelButton,
+.submitButton{
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: black;
+    padding: 6.2px 11px;
+    cursor: pointer;
+    border: 0px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.submitButton{
+    background-color: var(--purple);
+    border: 1px solid black;
+    color: var(--background-color);
+}
+
+.submitButton:hover{
+    background-color: #480bca;
+}
+
+.cancelButton:hover{
+    background-color: #e3e3e3;
 }

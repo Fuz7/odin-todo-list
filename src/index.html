@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <nav class="navbar">
@@ -57,6 +56,49 @@
         </div>
     </div>
     <div class="content"></div>
-    <div class="addButton"></div>
+    <div id="addButton" class="addButton"></div>
+    <div id="modal" class="modal">
+        <div class="modalAddContainer">
+            <form id="addForm" novalidate>
+            <div class="modalAddCard">
+                    <div class="modalHeader">
+                        <p>Add Task</p>
+                    </div>
+                    <div class="modalBody">
+                        <div class="titleAddContainer">
+                            <input type="text" id="titleAdd" class="titleAdd" placeholder=" ">
+                            <label for="titleAdd">Title<span>*</span></label>
+                            <span>Please fill out this field.</span>
+                        </div>
+                        <div class="descriptionAddContainer">
+                            <textarea id="descAdd" cols="30" rows="10" placeholder=" "></textarea>
+                            <label for="descAdd">Description</label>
+                        </div>
+                        <div class="dateAddContainer">
+                            <input type="date" name="" class="dateAdd" id="dateAdd" min="0001-01-01" max="9999-12-28">
+                            <label for="date">Due Date</label>
+                            <span>Invalid date.</span>
+                        </div>
+                        <div class="projectAddContainer">
+                            <select name=""  id="projectAdd">
+                                <option value="General" disabled selected>Project</option>
+                                <option value="General">General</option>
+                                <option value="Project1">Project 1</option>
+                            </select>
+                            <label for="">Project</label>
+                        </div>
+                        <div class="milestoneAddContainer">
+                            <input type="checkbox" value="checked" name="" id="milestoneAdd">
+                            <label for="milestoneAdd"><span>Milestone</span></label>
+                        </div>
+                    </div>
+                    <div class="modalButtonContainer">
+                       <button type="button" id="cancelButton" class="cancelButton">Cancel</button>
+                       <button type="button" id="submitButton" class="submitButton">Submit</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

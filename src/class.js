@@ -8,25 +8,33 @@ export class Task{
         return ++Task.taskId
     }
 
-    constructor(title,description,date,project,milestone,dateMade){
+    constructor(title,description,date,project,milestone){
         this.taskId = Task.setTaskId()
         this.title = title
         this.description = description
         this.date = date
         this.project = project
-        this.milestone = milestone
-        this.dateMade = dateMade
+        this.milestone = milestone  
+        this.dateCompletion = ''
     }
 
 
 }
 
-class Project{
+export class Project{
 
-    constructor(name){
-        this.name = name
+    static projectId = 0;
+
+    static setProjectId(){
+        return ++Project.projectId
+    }
+
+    constructor(title){
+        this.projectId = Project.setProjectId()
+        this.title = title
     }
 
 }
 
 export let myTask = []
+export let myProject = []

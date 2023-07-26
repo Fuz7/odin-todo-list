@@ -1,13 +1,13 @@
 import { utcToZonedTime } from 'date-fns-tz'
 import { format  } from 'date-fns'
-import { myTask, Task } from './class'
+import { myTask, Task, myProject, Project } from './class'
+
+
 
 export function checkValidity(){
 
-    let form = document.getElementById('addForm')
-    let submitButton = document.getElementById('submitButton')
+
     let titleInput = document.getElementById('titleAdd')
-    let milestoneInput = document.getElementById('milestoneAdd')
     let dateInput = document.getElementById('dateAdd')
 
 
@@ -42,6 +42,41 @@ export function checkTitleInput(){
 
 }
 
+export function checkProjectValidity(){
+
+    let titleInput = document.getElementById('projectTitleAdd')
+
+    if (titleInput.value === ""){
+        titleInput.classList.add('invalid')
+        return false
+    }
+
+    return true
+
+}
+
+export function checkProjectTitleInput(){
+
+    let titleInput = document.getElementById('projectTitleAdd')
+
+    if (titleInput.value !== ""){
+        titleInput.classList.remove('invalid')
+    }    
+    
+
+}
+
+export function checkDateInput(){
+
+    let dateInput = document.getElementById('dateAdd')
+
+    if (dateInput.checkValidity()){
+        dateInput.classList.remove('invalid')
+    }
+
+}
+
+
 function getCurrentDatePH(){
     const PH_UTC_OFFSET = '+08:00'
 
@@ -63,20 +98,32 @@ export function addTask(){
     let desc = document.getElementById('descAdd').value
     let date = document.getElementById('dateAdd').value
 
-    let dateObject = new Date(date)
-    const currentDatePh = utcToZonedTime(dateObject, PH_UTC_OFFSET)
-    let formattedDate = format(currentDatePh, 'MM/dd/yyyy')
+
+    if (date !== ""){
+
+        let dateObject = new Date(date)
+        const currentDatePh = utcToZonedTime(dateObject, PH_UTC_OFFSET)
+        var formattedDate = format(currentDatePh, 'MM/dd/yyyy')
+    }
 
     let project= document.getElementById('projectAdd').value
     let milestoneInput = document.getElementById('milestoneAdd')
-    let dateMade = getCurrentDatePH()
 
     let milestone = milestoneInput.checked ? true : false
 
-    let task = new Task(title,desc,formattedDate,project,milestone,dateMade)
+    let task = new Task(title,desc,formattedDate,project,milestone)
     myTask.push(task)
     console.log(myTask)
     emptyInputs()
+}
+
+export function addProject(){
+
+    let title = document.getElementById('projectTitleAdd').value
+
+    let project = new Project(title)
+    myProject.push(project)
+    console.log(myProject)
 }
 
 export function emptyInputs(){
@@ -87,4 +134,14 @@ document.getElementById('dateAdd').value = ""
 document.getElementById('projectAdd').value = "General"
 document.getElementById('milestoneAdd').checked = false
 
+document.getElementById('titleAdd').classList.remove('invalid')
+document.getElementById('dateAdd').classList.remove('invalid')
+
 }
+
+export function emptyProjectInput(){
+    document.getElementById('projectTitleAdd').value = ""
+    document.getElementById('projectTitleAdd').classList.remove('invalid')
+    
+}
+

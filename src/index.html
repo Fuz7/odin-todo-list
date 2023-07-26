@@ -14,33 +14,33 @@
         <div class="overviewHeader">Overview</div>
 
         <div class="overviewList">
-            <div>
+            <div data-type="Inbox" class="overviewItem">
                 <p>Inbox</p>
                 <span></span>
                 <span></span>
             </div>
-            <div class="active">
+            <div data-type="Today" class="overviewItem active">
                 <p>Today</p>
                 <span></span>
                 <span></span>
             </div>
-            <div>
+            <div data-type="Week" class="overviewItem">
                 <p>Week</p>
                 <span></span>
                 <span></span>
             </div>
-            <div>
+            <div data-type="Milestone" class="overviewItem">
                 <p>Milestone</p>
                 <span></span>
                 <span></span>
             </div>
         </div>
 
-        <div class="projectHeader">
+        <div class="projectHeader" class="overviewItem">
             Project
-            <span></span>
+            <span id="addProjectButton" class="addProjectButton"></span>
         </div>
-        <div class="projectList">
+        <div id="projectList" class="projectList">
             <div class="active">
                 <p>Project 1</p>
                 <span></span>
@@ -60,7 +60,7 @@
     <div id="modal" class="modal">
         <div class="modalAddContainer">
             <form id="addForm" novalidate>
-            <div class="modalAddCard">
+                <div class="modalAddCard">
                     <div class="modalHeader">
                         <p>Add Task</p>
                     </div>
@@ -71,7 +71,7 @@
                             <span>Please fill out this field.</span>
                         </div>
                         <div class="descriptionAddContainer">
-                            <textarea id="descAdd" cols="30" rows="10" placeholder=" "></textarea>
+                            <textarea id="descAdd" class="descAdd" cols="30" rows="10" placeholder=" "></textarea>
                             <label for="descAdd">Description</label>
                         </div>
                         <div class="dateAddContainer">
@@ -95,6 +95,26 @@
                     <div class="modalButtonContainer">
                        <button type="button" id="cancelButton" class="cancelButton">Cancel</button>
                        <button type="button" id="submitButton" class="submitButton">Submit</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modalAddProjectContainer">
+            <form id="addProject" novalidate>
+                <div class="modalAddProjectCard">
+                    <div class="modalProjectHeader">
+                        <p>Add Project</p>
+                    </div>
+                    <div class="modalProjectBody">
+                        <div class="titleAddProjectContainer">
+                            <input type="text" id="projectTitleAdd" class="projectTitleAdd" placeholder=" ">
+                            <label for="projectTitleAdd">Title <span>*</span></label>
+                            <span>Please fill out this field</span>
+                        </div>                        
+                    </div>
+                    <div class="modalProjectButtonContainer">
+                       <button type="button" id="cancelProjectButton" class="cancelProjectButton">Cancel</button>
+                       <button type="button" id="submitProjectButton" class="submitProjectButton">Submit</button> 
                     </div>
                 </div>
             </form>

@@ -14,3 +14,8 @@ myProject.push(project1)
 myProject.push(project2)
 
 renderProjectSidebar()
+
+let dropdown = document.getElementById('InboxDropdown')
+dropdown.addEventListener('click',function(){
+    dropdown.classList.toggle('active')
+})

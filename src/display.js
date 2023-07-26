@@ -36,14 +36,19 @@ export let renderProjectSidebar = function(){
 
 let toggleProjectActive = function(){
 
-    let projects = Array.from(document.getElementsByClassName('project'))
-
-    projects.forEach(item =>{
-        item.classList.remove('active')
-    })
-
+    removeActive()
     this.classList.add('active')
     
+}
+
+function removeActive(){
+    let projects = Array.from(document.getElementsByClassName('project'))
+    let overviewItem = Array.from(document.getElementsByClassName('overviewItem'))
+
+    projects.forEach(item => item.classList.remove('active'))
+
+    overviewItem.forEach(item => item.classList.remove('active'))
+
 }
 
 let displayValidity = (function(){
@@ -120,10 +125,12 @@ let displayAddProjectMenu = (function(){
 let sidebarDisplay = (function(){
 
     let overviewItem = Array.from(document.getElementsByClassName('overviewItem'))
-
+    
+    
     overviewItem.forEach(item => {
         item.addEventListener('click', function(){
-            overviewItem.forEach(item => item.classList.remove('active'))
+
+            removeActive()
             this.classList.add('active')
         })
     });

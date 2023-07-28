@@ -14,12 +14,12 @@
         <div class="overviewHeader">Overview</div>
 
         <div class="overviewList">
-            <div data-type="Inbox" class="overviewItem">
+            <div data-type="Inbox" class="overviewItem active">
                 <p>Inbox</p>
                 <span></span>
                 <span></span>
             </div>
-            <div data-type="Today" class="overviewItem active">
+            <div data-type="Today" class="overviewItem">
                 <p>Today</p>
                 <span></span>
                 <span></span>
@@ -57,32 +57,14 @@
     </div>
     <div class="content">
         <div class="InboxContainer">
-            <div class="InboxHeader">Inbox</div>
-            <div id="InboxDropdown" class="InboxDropdown">
-               <div>Default</div> 
+            <div id="contentHeader" class="inboxHeader">Inbox</div>
+            <div id="dropdown" class="dropdown">
+                <div>Default</div> 
             </div>
         </div>
-        <div class="contentBody">
-            <div class="taskData">
-                <div class="leftSideData">
-                    <div class="checkboxContainer">
-                        <input type="checkbox" name="" id="checkbox1">
-                        <label for="checkbox1"></label>
-                    </div>
-                    <p class="task-text">Have A Meal </p>
-                </div>
-                <div class="rightSideData">
-                    <div class="dueDate">
-                        <span></span>
-                        <div>02/13/2023</div>
-                        <span></span>
-                    </div>
-                    <div class="milestone"></div>
-                    <div class="editTask"></div>
-                    <div class="trashTask"></div>
-                    <div class="infoTask"></div>
-                </div>
-            </div>
+        <div class="contentBody" id="contentBody">
+         
+        </div>
         </div>
     </div>
     <div id="addButton" class="addButton"></div>
@@ -104,7 +86,7 @@
                             <label for="descAdd">Description</label>
                         </div>
                         <div class="dateAddContainer">
-                            <input type="date" name="" class="dateAdd" id="dateAdd" min="0001-01-01" max="9999-12-28">
+                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-28">
                             <label for="date">Due Date</label>
                             <span>Invalid date.</span>
                         </div>

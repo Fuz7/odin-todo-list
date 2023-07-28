@@ -576,14 +576,20 @@ form{
     justify-content: space-between;
 }
 
-.InboxHeader{
+.inboxHeader,
+.milestoneHeader{
     font-size: 48px;
     font-family: "Patua";
     top: 14px;
     color: white;
 }
 
-.InboxDropdown{
+.milestoneHeader{
+    color: var(--gold);
+}
+
+
+.dropdown{
     width: 143px;
     height: 34px;
     background-color: var(--sidebar);
@@ -595,18 +601,18 @@ form{
     cursor: pointer;
     border-radius: 2px;
 }
-.InboxDropdown > div{
+.dropdown > div{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 
-.InboxDropdown:hover{
+.dropdown:hover{
     background-color: #ececec;
 }
 
-.InboxDropdown::before{
+.dropdown::before{
     content: '';
     position: absolute;
     top: 18px;
@@ -619,7 +625,7 @@ form{
     transition: transform 0.2s;
 }
 
-.InboxDropdown::after{
+.dropdown::after{
     content: '';
     position: absolute;
     top: 18px;
@@ -632,12 +638,12 @@ form{
     transition: transform 0.2s;
 }
 
-.InboxDropdown.active::before{
+.dropdown.active::before{
     transform: rotate(-40deg);
 
 }
 
-.InboxDropdown.active::after{
+.dropdown.active::after{
     transform: rotate(40deg);
 
 }
@@ -647,7 +653,8 @@ form{
     width: 100%;
 }
 
-.taskData{
+.taskData,
+.milestoneData{
     background-color: var(--sidebar);
     height: 41px;
     display: flex;
@@ -658,6 +665,25 @@ form{
     padding: 0px 16px 0px 12px;
     flex-grow: 0;
     max-width: 1383px;
+    margin-bottom: 3px;
+}
+
+.taskData{
+    cursor:pointer;
+}
+
+.taskData:hover{
+    background-color: var(--header-color);
+}
+
+.taskData.checked > .leftSideData > .task-text{
+    text-decoration: line-through;
+}
+
+
+.milestoneData{
+    padding-left: 40px;
+    position: relative;
 }
 
 .leftSideData > .checkboxContainer input{
@@ -701,6 +727,17 @@ form{
     border-color: black;
 }
 
+.checkboxContainer.alreadyDue > label{
+    border-color: var(--red);
+}
+
+.checkboxContainer.noDue input:checked + label{
+    background-color: black;
+}
+.checkboxContainer.alreadyDue input:checked + label{
+    background-color: var(--red);
+}
+
 .checkboxContainer input:checked + label{
     background-color: var(--purple);
 }
@@ -711,7 +748,8 @@ form{
     opacity: 1;
 }
 
-.leftSideData{
+.leftSideData,
+.leftSideMilestoneData{
     display: flex;
     align-items: center;
     gap: 10px;
@@ -720,14 +758,33 @@ form{
     flex-grow: 0;
 }
 
-.leftSideData p{
+.leftSideData p,
+.leftSideMilestoneData .task-text{
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     max-width: 800px;
 }
 
-.rightSideData{
+.leftSideMilestoneData > span{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 40px;
+    width: 15px;
+    background-color: #480bca;
+}
+
+.leftSideMilestoneData.alreadyDue > span{
+    background-color: var(--red);
+}
+
+.leftSideMilestoneData.noDue > span{
+    background-color: black;
+}
+
+.rightSideData,
+.rightSideMilestoneData{
     height: 100%;
     display: flex;
     justify-content: flex-end;
@@ -735,24 +792,63 @@ form{
     position: relative;
 }
 
-.dueDate{
-    font-size: 20px;
-    width: 97px;
-    margin-right: 12px;
+.rightSideMilestoneData{
+    gap: 13px;
 }
 
-.dueDate span:first-child,
+.dueDate{
+    font-size: 20px;
+    font-family: 'Roboto';
+    width: 97px;
+    margin-right: 35px;
+}
+
+
 .dueDate span:nth-of-type(2){
     width: 2px;
     height: 40px;
     background-color: var(--purple);
     position: absolute;
     top: 0px;
-    left: -6px;
+    left: -12px;
 }
 
 .dueDate span:nth-of-type(2){
-    left: 96px;
+    left: 115px;
+}
+
+.doneDate,
+.rightSideMilestoneData > .dueDate{
+    width: auto;
+    font-size: 20px;
+    margin: 0px;
+    font-family: 'Roboto';
+}
+.dash{
+    height: 2px;
+    width: 20px;
+    background-color: var(--purple);
+    
+}
+
+.separator{
+    height: 40px;
+    width: 2px;
+    background-color: var(--purple);
+    position: absolute;
+    right: 34px;
+}
+
+.rightSideData > span{
+    width: 2px;
+    height: 40px;
+    position: absolute;
+    background-color: var(--purple);
+    left: -17px;
+}
+
+.rightSideMilestoneData > .infoTask{
+    margin-left: 10px;
 }
 
 .milestone{
@@ -761,10 +857,18 @@ form{
     height: 28px;
     background-image: url('milestoneFlag.svg');
     margin-right: 13px;
+    position: relative;
 }
 
 .milestone.true{
     background-image: url('trueFlag.svg');
+}
+
+.milestone > span{
+    width: 2px;
+    height: 40px;
+    background-color: var(--purple);
+    left: -12px;
 }
 
 .editTask{
@@ -793,10 +897,12 @@ form{
 .infoTask{
     cursor: pointer;
     transition: transform 0.2s;
+    z-index: 2;
 }
 
 .editTask:hover,
 .trashTask:hover,
 .infoTask:hover{
+    z-index: 1;
     transform: scale(1.3);
 }

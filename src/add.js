@@ -1,6 +1,7 @@
 import { utcToZonedTime } from 'date-fns-tz'
 import { format  } from 'date-fns'
-import { myTask, Task, myProject, Project } from './class'
+import { myTask, Task, myProject, Project, getSelectedProjectId } from './class'
+import { removeActive, renderOverviewContent, renderProjectContent } from './display'
 
 
 
@@ -77,7 +78,7 @@ export function checkDateInput(){
 }
 
 
-function getCurrentDatePH(){
+export function getCurrentDatePH(){
     const PH_UTC_OFFSET = '+08:00'
 
     const currentDateUTC = new Date();
@@ -91,6 +92,8 @@ function getCurrentDatePH(){
     return formattedDate
 }
 
+
+
 export function addTask(){
     const PH_UTC_OFFSET = '+08:00'
 
@@ -99,22 +102,35 @@ export function addTask(){
     let date = document.getElementById('dateAdd').value
 
 
+    formattedDate = ""
+
     if (date !== ""){
 
         let dateObject = new Date(date)
-        const currentDatePh = utcToZonedTime(dateObject, PH_UTC_OFFSET)
-        var formattedDate = format(currentDatePh, 'MM/dd/yyyy')
+        const dateInPh = utcToZonedTime(dateObject, PH_UTC_OFFSET)
+        var formattedDate = format(dateInPh, 'MM/dd/yyyy')
     }
+
 
     let project= document.getElementById('projectAdd').value
     let milestoneInput = document.getElementById('milestoneAdd')
 
     let milestone = milestoneInput.checked ? true : false
-
     let task = new Task(title,desc,formattedDate,project,milestone)
+
     myTask.push(task)
-    console.log(myTask)
-    emptyInputs()
+    if (project === 'General'){
+        emptyInputs()
+        renderOverviewContent("Inbox")
+    } else{
+        emptyInputs()
+        renderProjectContent(project)
+        removeActive()
+        let projectDiv = document.querySelector(`div[data-project="${getSelectedProjectId(project)}"]`)
+        projectDiv.classList.add('active')
+    }
+
+
 }
 
 export function addProject(){
@@ -122,8 +138,9 @@ export function addProject(){
     let title = document.getElementById('projectTitleAdd').value
 
     let project = new Project(title)
+    renderProjectContent(title)
     myProject.push(project)
-    console.log(myProject)
+
 }
 
 export function emptyInputs(){

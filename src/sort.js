@@ -1,16 +1,18 @@
-import {myProject, myTask, mySortedTask, emptySortedTask} from './class.js'
+import {myProject, myTask, mySortedTask, emptySortedTask, setSortedTask, emptySortedListedTask, mySortedListedTask} from './class.js'
 import { isAfter, isBefore, isSameWeek ,isSameDay, parse, differenceInCalendarDays} from 'date-fns'
 import { getCurrentDatePH } from './add.js'
 
 
 export function sortInbox(){
+    emptySortedTask()
+
     myTask.forEach(item =>{
         mySortedTask.push(item)
     })
 }
 
 export function sortToday(){
-
+    emptySortedTask()
     let today = parse(getCurrentDatePH(), 'MM/dd/yyyy', new Date())
 
     myTask.forEach(item =>{
@@ -22,7 +24,7 @@ export function sortToday(){
 }
 
 export function sortWeek(){
-
+    emptySortedTask()
     let today = parse(getCurrentDatePH(), 'MM/dd/yyyy', new Date())
 
     myTask.forEach(item => {
@@ -33,6 +35,42 @@ export function sortWeek(){
         }
     })
 }
+
+export function sortByMilestone(){
+    emptySortedTask()
+
+    let milestoneList = myTask.filter(item=>{
+        if(item.milestone === true && item.dateCompletion !== ''){
+            return true
+        }
+    })
+
+    milestoneList.forEach(item=>{
+        mySortedTask.push(item)
+    })
+
+}
+
+
+export function sortByProject(name){
+    let SortedList
+
+    
+
+    if (name !== "Default"){
+        emptySortedListedTask()
+        SortedList = mySortedTask.filter(item=> (item.project === name)? true : false)
+        emptySortedTask()
+        SortedList.forEach(item=> mySortedListedTask.push(item))
+    } else{
+        
+        emptySortedListedTask()
+        mySortedTask.forEach(item=> mySortedListedTask.push(item))
+        emptySortedTask()
+    }
+
+}   
+
 
 export function isAlreadyDue(date){
     let today = parse(getCurrentDatePH(), 'MM/dd/yyyy', new Date())    

@@ -3,9 +3,9 @@ import { renderProjectSidebar, renderOverviewContent, renderProjectList } from '
 import {myTask, Task, myProject, Project} from './class.js'
 
 
-let task1 = new Task('First Task', 'HEHE', '03/23/2021','General', false)
-let task2 = new Task('Second Task', '', '03/24/2024','Project 1', false)
-let task3 = new Task('Third Task', '', '07/28/2023','Project 1', true)
+let task1 = new Task('First Task', 'HEHE', '08/04/2023','General', false)
+let task2 = new Task('Second Task', '', '03/24/2024','Coding', false)
+let task3 = new Task('Third Task', '', '07/29/2023','Exercise', true)
 let task4 = new Task('Fourth Task', 'EA','',"General", true)
 let task5 = new Task('Fifth Task', 'EA','03/21/2022',"General", true)
 
@@ -25,9 +25,5 @@ myProject.push(project2)
 renderProjectSidebar()
 renderOverviewContent('Inbox')
 renderProjectList()
-let dropdown = document.getElementById('dropdown')
-dropdown.addEventListener('click',function(){
-    dropdown.classList.toggle('active')
-})
 
 

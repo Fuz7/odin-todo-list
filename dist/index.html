@@ -59,8 +59,15 @@
         <div class="InboxContainer">
             <div id="contentHeader" class="inboxHeader">Inbox</div>
             <div id="dropdown" class="dropdown">
-                <div>Default</div> 
+                <div id="dropdownDisplay">Default</div> 
+                <div id="sortContainer" class="sortContainer">
+                    <div class="sortOptions active">Default</div>
+                    <div class="sortOptions">General</div>
+                    <div class="sortOptions">Coding</div>
+                    <div class="sortOptions">Exercise</div>
+                </div>
             </div>
+            
         </div>
         <div class="contentBody" id="contentBody">
          
@@ -70,7 +77,6 @@
     <div id="addButton" class="addButton"></div>
     <div id="modal" class="modal">
         <div class="modalAddContainer">
-            <form id="addForm" novalidate>
                 <div class="modalAddCard">
                     <div class="modalHeader">
                         <p>Add Task</p>
@@ -86,7 +92,7 @@
                             <label for="descAdd">Description</label>
                         </div>
                         <div class="dateAddContainer">
-                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-28">
+                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-32">
                             <label for="date">Due Date</label>
                             <span>Invalid date.</span>
                         </div>
@@ -108,10 +114,8 @@
                        <button type="button" id="submitButton" class="submitButton">Submit</button> 
                     </div>
                 </div>
-            </form>
         </div>
         <div class="modalAddProjectContainer">
-            <form id="addProject" novalidate>
                 <div class="modalAddProjectCard">
                     <div class="modalProjectHeader">
                         <p>Add Project</p>
@@ -128,7 +132,21 @@
                        <button type="button" id="submitProjectButton" class="submitProjectButton">Submit</button> 
                     </div>
                 </div>
-            </form>
+        </div>
+        <div class="modalDeleteProjectContainer">
+            <div class="modalDeleteProjectCard">
+                <div class="modalDeleteProjectHeader">
+                    <p>Delete Project</p>
+                </div>
+                <div class="modalDeleteProjectBody">
+                    <p>Are you sure?</p>
+                    <p id="modalDeleteTextBody">Project Coding will be deleted <span>forever</span></p>
+                </div>
+                <div class="modalDeleteProjectButtonContainer">
+                    <button type="button" id="cancelDeleteProjectButton" class="cancelDeleteProjectButton">Cancel</button>
+                    <button type="button" id="DeleteProjectButton" class="DeleteProjectButton">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

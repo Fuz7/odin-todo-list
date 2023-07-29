@@ -43,9 +43,10 @@ export class Project{
 export let myTask = []
 export let myProject = []
 export let mySortedTask = []
+export let mySortedListedTask = []
 export let myFinishedMilestone = []
 export let taskListeners = [] 
-
+export let sortListListeners = []
 
 export function getSelectedProjectId(title){
     let id
@@ -67,7 +68,13 @@ export function setMyTaskDateCompletion(taskId,dateCompletion){
     })
 }
 
+export function emptyTask(){
+    myTask = []
+}
 
+export function emptySortedListedTask(){
+    mySortedListedTask = []
+}
 
 export function emptySortedTask(){
     mySortedTask = []

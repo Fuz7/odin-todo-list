@@ -1,7 +1,7 @@
 import { utcToZonedTime } from 'date-fns-tz'
 import { format  } from 'date-fns'
 import { myTask, Task, myProject, Project, getSelectedProjectId } from './class'
-import { removeActive, renderOverviewContent, renderProjectContent } from './display'
+import { removeActive, renderOverviewContent, renderProjectContent, renderProjectList } from './display'
 
 
 
@@ -122,6 +122,9 @@ export function addTask(){
     if (project === 'General'){
         emptyInputs()
         renderOverviewContent("Inbox")
+        let inbox = document.querySelector(`div[data-type="Inbox"]`)
+        removeActive()
+        inbox.classList.add('active')
     } else{
         emptyInputs()
         renderProjectContent(project)
@@ -140,6 +143,7 @@ export function addProject(){
     let project = new Project(title)
     renderProjectContent(title)
     myProject.push(project)
+    renderProjectList()
 
 }
 

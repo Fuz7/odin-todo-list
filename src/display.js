@@ -1,16 +1,23 @@
 import * as add from './add.js'
 import { myProject, myTask, mySortedTask, emptySortedTask, setMyTaskDateCompletion, 
-         taskListeners, emptyTaskListeners, Project} from './class.js'
+         taskListeners, emptyTaskListeners, Project, mySortedListedTask, sortListListeners} from './class.js'
+import { deleteProject } from './delete.js'
 import * as sort from './sort.js'
 
 export let renderProjectSidebar = function(){
 
-    let projectList = document.getElementById('projectList')
-    projectList.innerHTML = ""
     let oldProjects = Array.from(document.getElementsByClassName('project'))
     oldProjects.forEach(item=>{
         item.removeEventListener('click',toggleProjectActive)
     })
+    let olddeleteButton = Array.from(document.getElementsByClassName('sideDeleteProject'))
+    olddeleteButton.forEach(item=>{
+        item.removeEventListener('click',displayDeleteProject)
+    })
+ 
+
+    let projectList = document.getElementById('projectList')
+    projectList.innerHTML = ""
 
     myProject.forEach(item =>{
         let div = document.createElement('div')
@@ -18,7 +25,11 @@ export let renderProjectSidebar = function(){
         div.setAttribute('data-project',item.projectId)
         let span1 = document.createElement('span')
         let span2 = document.createElement('span')
+        span2.setAttribute('data-project-delete',item.projectId)
+        span2.classList.add('sideDeleteProject')
         let span3 = document.createElement('span')
+        span3.classList.add('sideEditProject')
+        span3.setAttribute('data-project-edit',item.projectId)
         div.innerHTML = item.title
         div.append(span1)
         div.append(span2)
@@ -29,14 +40,61 @@ export let renderProjectSidebar = function(){
     })
 
     let projects = Array.from(document.getElementsByClassName('project'))
-
+    let deleteButton = Array.from(document.getElementsByClassName('sideDeleteProject'))
 
     projects.forEach(item =>{
         item.addEventListener('click',toggleProjectActive)
         item.addEventListener('click', renderProjectContent(item))
     })
+
+    deleteButton.forEach(item=>{
+        item.addEventListener('click',displayDeleteProject  )
+    })
     
 }
+
+function displayDeleteProject(e){
+    e.stopPropagation()
+    let projectName = e.currentTarget.parentElement.innerText
+    let projectId = e.currentTarget.parentElement.getAttribute('data-project')
+    let modal = document.getElementById('modal')
+    modal.classList.add('activeDeleteProject')
+
+    let textbody = document.getElementById('modalDeleteTextBody')
+    textbody.innerHTML= ""
+    textbody.innerHTML = "Project " + projectName + " will be deleted <span>forever<span>"
+
+    let deleteButton = document.getElementById('DeleteProjectButton')
+    deleteButton.setAttribute('data-projectdelId', projectId)
+}
+
+
+let renderCancelDeleteButton = (function(){
+    let cancelButton = document.getElementById('cancelDeleteProjectButton')
+    let modal = document.getElementById('modal')
+
+    cancelButton.addEventListener('click',function(){
+        modal.classList.remove('activeDeleteProject')
+    })
+})()
+
+let renderDeleteButton = (function(){
+    let deleteButton = document.getElementById("DeleteProjectButton")
+    let modal = document.getElementById('modal')
+    let header = document.getElementById('contentHeader')
+
+    deleteButton.addEventListener('click',function(){
+        let deleteId = deleteButton.getAttribute('data-projectdelid')
+        deleteProject(deleteId)
+        let inbox = document.getElementsByClassName('overviewItem')[0]
+        removeActive()
+        inbox.classList.add('active')
+        modal.classList.remove('activeDeleteProject')
+        renderProjectSidebar()
+        renderOverviewContent('Inbox')
+        contentHeader.innerText = "Inbox"
+    })
+})()
 
 let toggleProjectActive = function(project){
         project = project.currentTarget
@@ -101,6 +159,9 @@ let displayProjectValidity = (function(){
             removeActive()
             let project = document.querySelector(`div[data-project="${Project.getProjectId()}"]`)
             project.classList.add('active')
+            let header = document.getElementById('contentHeader')
+            header.innerHTML = ''
+            header.innerText = project.innerText
         }
     })
 
@@ -155,11 +216,26 @@ let sidebarDisplay = (function(){
 export function renderOverviewContent(contentValue){
     emptyEventListener()
     emptySortedTask()
+    removeSortedListListener()
 
+    let dropdown = document.getElementById('dropdown')
+    dropdown.classList.remove('hide')
+    
     let contentHeader = document.getElementById('contentHeader')
-
+    
     contentHeader.classList.add('inboxHeader')
+    contentHeader.classList.remove('milestoneHeader')
     contentHeader.innerText = contentValue
+    
+    let dropdownDisplay = document.getElementById('dropdownDisplay')
+    let sortContainer = document.getElementById('sortContainer')
+    let defaultOption = sortContainer.children[0]
+    removeActiveSortList()
+    dropdownDisplay.innerText = "Default"
+    defaultOption.classList.add('active')
+
+
+
 
     let contentBody = document.getElementById('contentBody')
     contentBody.innerHTML = ""
@@ -172,15 +248,15 @@ export function renderOverviewContent(contentValue){
         sort.sortWeek()
     }
     console.log(mySortedTask)
+    
+    displaySortList()
     mySortedTask.forEach(item=>renderTaskData(item))
     renderTaskCompletionListener()
-
+    renderSortedListListener()
+    
 }
 function renderTaskData(item){        
-
-    let taskHeader = document.getElementById('contentHeader')
-    taskHeader.classList.add('inboxHeader')
-    taskHeader.classList.remove('milestoneHeader')
+    
 
     let taskData = document.createElement('div')
     taskData.classList.add('taskData')
@@ -275,6 +351,17 @@ function renderTaskData(item){
 function renderMilestoneContent(){
     emptySortedTask()
     emptyEventListener()
+    removeSortedListListener()
+
+    let dropdown = document.getElementById('dropdown')
+    dropdown.classList.remove('hide')
+    
+    let dropdownDisplay = document.getElementById('dropdownDisplay')
+    let sortContainer = document.getElementById('sortContainer')
+    let defaultOption = sortContainer.children[0]
+    removeActiveSortList()
+    dropdownDisplay.innerText = "Default"
+    defaultOption.classList.add('active')
 
     let contentHeader = document.getElementById('contentHeader')
     contentHeader.classList.add('milestoneHeader')
@@ -283,21 +370,22 @@ function renderMilestoneContent(){
     let contentBody = document.getElementById('contentBody')
     contentBody.innerHTML = ''
 
-    let milestoneTask = myTask.filter(item =>{
-        if(item.milestone === true && item.dateCompletion !== ''){
-            return true
-        }
-    })
-
-    let mySortedTask = milestoneTask
-    console.log(mySortedTask)
+    sort.sortByMilestone()
+    displaySortList()
     mySortedTask.forEach(item => renderMilestoneData(item));
-
+    renderSortedListListener()
 }
 
 export function renderProjectContent(contentValue){
     emptySortedTask()
     emptyEventListener()
+
+    let dropdown = document.getElementById('dropdown')
+    dropdown.classList.add('hide')
+    dropdown.classList.remove('active')
+
+    let header = document.getElementById('contentHeader')
+    header.classList.remove('milestoneHeader')
     let filteredTask = myTask.filter(item =>(contentValue === item.project)? true : false )
     filteredTask.forEach(item=>{
         mySortedTask.push(item)
@@ -308,6 +396,7 @@ export function renderProjectContent(contentValue){
 
     console.log(mySortedTask)
     
+    displaySortList()
     mySortedTask.forEach(item => renderTaskData(item))
     let contentHeader = document.getElementById('contentHeader')
     contentHeader.innerText = contentValue
@@ -416,6 +505,7 @@ export function renderProjectList(){
     let projectSelect = document.getElementById('projectAdd')
     projectSelect.innerHTML ='';
 
+    
     let defaultOption = document.createElement('option')
     defaultOption.setAttribute('value',"General")
     defaultOption.setAttribute('disabled','' )
@@ -430,4 +520,81 @@ export function renderProjectList(){
         option.setAttribute('value',item.title)
         projectSelect.append(option)
     })
+}
+
+let dropdownToggler = (function(){
+
+    let dropdown = document.getElementById('dropdown')
+    dropdown.addEventListener('click',function(){
+        dropdown.classList.toggle('active')
+    })
+
+})()
+
+function displaySortList(){
+    let sortContainer = document.getElementById('sortContainer')
+    sortContainer.innerHTML = ''
+
+    let sortOptionDefault = document.createElement('div')
+    sortOptionDefault.classList.add('sortOptions')
+    sortOptionDefault.classList.add('active')
+    sortOptionDefault.innerHTML = 'Default'
+    sortContainer.append(sortOptionDefault)
+
+    myProject.forEach(item=>{
+        let sortOption = document.createElement('div')
+        sortOption.classList.add('sortOptions')
+        sortOption.innerText = item.title
+        sortContainer.append(sortOption)
+    })
+}
+
+function renderSortedListListener(){
+    let options = Array.from(document.getElementsByClassName('sortOptions'))
+    
+    options.forEach(item=> {
+        item.addEventListener('click',renderSortedContent)
+        sortListListeners.push(item)
+    })
+}
+
+function removeSortedListListener(){  
+    sortListListeners.forEach(item =>{
+        item.removeEventListener('click', renderSortedContent)
+    })
+        
+    
+}
+
+function renderSortedContent(){
+    let overviewItem = document.getElementsByClassName('overviewItem active')[0]
+    if (overviewItem.innerText === 'Inbox'){
+        sort.sortInbox()
+    } else if(overviewItem.innerText === "Today"){
+        sort.sortToday()
+    } else if(overviewItem.innerText === "Week"){
+        sort.sortWeek()
+    } else if(overviewItem.innerText === "Milestone"){
+        sort.sortByMilestone()
+    }
+
+    sort.sortByProject(this.innerText)
+    console.log(mySortedTask)
+    let contentBody = document.getElementById('contentBody')
+    contentBody.innerHTML= ''
+    let dropdowntext = document.getElementById('dropdownDisplay')
+    dropdowntext.innerHTML = this.innerText
+    removeActiveSortList()
+    this.classList.add('active')
+
+    if(overviewItem.innerText !== "Milestone") mySortedListedTask.forEach(item=>renderTaskData(item))
+    else{
+        mySortedListedTask.forEach(item=>renderMilestoneData(item))
+    }
+}
+
+
+function removeActiveSortList(){
+    let lists = Array.from(document.getElementsByClassName('sortOptions'))
+    lists.forEach(item=>item.classList.remove('active'))
 }

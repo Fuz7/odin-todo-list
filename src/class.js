@@ -16,7 +16,7 @@ export class Task{
         this.project = project
         this.milestone = milestone  
         this.dateCompletion = ''
-        
+        this.removed = false 
     }
 
 

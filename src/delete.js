@@ -12,5 +12,21 @@ export function deleteProject(id){
     let remainingTask = myTask.filter(item => (item.project === projectTitle)? false: true)
     emptyTask()
     remainingTask.forEach(item=>myTask.push(item))
+}
 
+export function deleteTask(id){
+    for(let i = 0;i < myTask.length;i++){
+        let task = myTask[i]
+        if(task.taskId !== Number(id)){
+            continue
+        }
+
+        if(task.milestone === true && task.dateCompletion !==''){
+            myTask[i].removed = true
+            break;
+        }else{
+            myTask.splice(i,1)
+            break;
+        }
+    }
 }

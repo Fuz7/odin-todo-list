@@ -267,6 +267,7 @@ body{
 
 
 .modal .modalAddCard,
+.modal .modalDeleteCard
 .modal .modalEditCard,
 .modal .modalAddProjectCard,
 .modal .modalDeleteProjectCard,
@@ -277,6 +278,7 @@ body{
 }
 
 .modal.active,
+.modal.activeDeleteTask,
 .modal.activeEditTask,
 .modal.activeProject,
 .modal.activeDeleteProject,
@@ -286,6 +288,7 @@ body{
 }
 
 .modal.active .modalAddCard,
+.modal.activeDeleteTask .modalDeleteCard,
 .modal.activeEditTask .modalEditCard,
 .modal.activeProject .modalAddProjectCard,
 .modal.activeDeleteProject .modalDeleteProjectCard,
@@ -297,6 +300,7 @@ body{
 
 
 .modalAddContainer,
+.modalDeleteContainer,
 .modalEditContainer,
 .modalAddProjectContainer,
 .modalDeleteProjectContainer,
@@ -309,11 +313,13 @@ body{
     background-color: rgba(0,0,0,0.15);
 }
 
-.modal.active .modalAddContainer{
+.modal.active .modalAddContainer,
+.modal.activeDeleteTask .modalDeleteContainer{
     z-index: 3;
 }
 
 .modalEditContainer,
+.modalDeleteContainer,
 .modalAddProjectContainer,
 .modalDeleteProjectContainer,
 .modalEditProjectContainer{
@@ -325,6 +331,7 @@ body{
 }
 
 .modal.activeEditProject .modalEditContainer,
+.modal.activeDeleteTask .modalDeleteContainer,
 .modal.activeProject .modalAddProjectContainer,
 .modal.activeDeleteProject .modalDeleteProjectContainer,
 .modal.activeEditProject .modalEditProjectContainer{
@@ -344,6 +351,7 @@ body{
 
 
 .modalAddProjectCard,
+.modalDeleteCard,
 .modalDeleteProjectCard,
 .modalEditProjectCard{
     width: 400px;
@@ -357,6 +365,7 @@ body{
 
 
 .modalHeader,
+.modalDeleteHeader,
 .modalEditHeader,
 .modalProjectHeader,
 .modalDeleteProjectHeader,
@@ -373,6 +382,7 @@ body{
     color: #FFFFFF;
 }
 
+.modalDeleteHeader,
 .modalDeleteProjectHeader{
     background-color: var(--red);
 }
@@ -384,21 +394,25 @@ body{
     padding: 0px 35px;
 }
 
-.modalDeleteProjectBody{
+.modalDeleteProjectBody,
+.modalDeleteBody{
     padding: 35px 20px 0px 30px;
 }
 
-.modalDeleteProjectBody > p:first-of-type{
+.modalDeleteProjectBody > p:first-of-type,
+.modalDeleteBody >  p:first-of-type{
     font-family: 'Patua';
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.modalDeleteProjectBody > p:nth-of-type(2){
+.modalDeleteProjectBody > p:nth-of-type(2),
+.modalDeleteBody > p:nth-of-type(2){
     font-family: 'Roboto';
 }
 
-.modalDeleteProjectBody > p:nth-of-type(2) > span{
+.modalDeleteProjectBody > p:nth-of-type(2) > span,
+.modalDeleteBody > p:nth-of-type(2) > span{
     font-weight: bold;
 }
 
@@ -644,6 +658,7 @@ form{
 
 
 .modalButtonContainer,
+.modalDeleteButtonContainer,
 .modalButtonEditContainer,
 .modalProjectButtonContainer,
 .modalDeleteProjectButtonContainer{
@@ -657,6 +672,8 @@ form{
 }
 
 .cancelButton,
+.cancelDeleteButton,
+.DeleteButton,
 .cancelEditButton,
 .submitButton,
 .editButton,
@@ -692,16 +709,19 @@ form{
     background-color: #480bca;
 }
 
-.DeleteProjectButton{
+.DeleteProjectButton,
+.DeleteButton{
     background-color: var(--red);
     color: white;
 }
 
-.DeleteProjectButton:hover{
+.DeleteProjectButton:hover,
+.DeleteButton:hover{
     background-color: #b90d0d;
 }
 
 .cancelButton:hover,
+.cancelDeleteButton:hover,
 .cancelEditButton:hover,
 .cancelProjectButton:hover,
 .cancelDeleteProjectButton:hover{

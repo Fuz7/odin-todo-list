@@ -3,9 +3,10 @@ import * as add from './add.js'
 import * as check from './check.js'
 import { myProject, myTask, mySortedTask, emptySortedTask, setMyTaskDateCompletion, 
          taskListeners, emptyTaskListeners, Project, mySortedListedTask, sortListListeners} from './class.js'
-import { deleteProject } from './delete.js'
+import { deleteProject, deleteTask } from './delete.js'
 import { editProject, editMyTask } from './edit.js'
 import * as sort from './sort.js'
+import { el } from 'date-fns/locale'
 
 export let renderProjectSidebar = function(){
 
@@ -58,10 +59,65 @@ export let renderProjectSidebar = function(){
     editButton.forEach(item =>{
         item.addEventListener('click',displayEditProject)
     })
-
-
 }
 
+
+
+
+
+function displayDeleteTask(e){
+    e.stopPropagation()
+    let taskId = e.currentTarget.getAttribute('data-task')
+    let taskData = e.currentTarget.parentElement.parentElement
+    let deleteButton = document.getElementById('DeleteButton')
+    let modal = document.getElementById('modal')
+    deleteButton.setAttribute('data-deletetaskid', taskId)
+
+    if (taskData.classList.contains('checked')){
+        let deleteId = deleteButton.getAttribute('data-deletetaskid')
+        let headerContent = document.getElementById('contentHeader').innerText
+        deleteTask(deleteId)
+        if(headerContent ==='Inbox' || headerContent ==='Today' || headerContent ==='Week'){
+            renderOverviewContent(headerContent)
+        }else{
+            renderProjectContent(headerContent)
+        }
+
+
+    }else{
+        let taskName = taskData.children[0].children[1].innerText
+        let modal = document.getElementById('modal')
+        modal.classList.add('activeDeleteTask')
+        
+        let textbody = document.getElementById('modalDeleteTaskTextBody')
+        textbody.innerHTML = ''
+        textbody.innerHTML = 'Task ' + taskName + ' will be deleted <span>forever<span>'
+    }
+}
+
+let renderDeleteTaskButton = (function(){
+    let deleteButton = document.getElementById('DeleteButton')
+    let modal = document.getElementById('modal')
+    deleteButton.addEventListener('click',function(){
+        let deleteId = deleteButton.getAttribute('data-deletetaskid')
+        let headerContent = document.getElementById('contentHeader').innerText
+        deleteTask(deleteId)
+        if(headerContent ==='Inbox' || headerContent ==='Today' || headerContent ==='Week'){
+            renderOverviewContent(headerContent)
+        }else{
+            renderProjectContent(headerContent)
+        }
+        modal.classList.remove('activeDeleteTask')
+    })
+})()
+
+let renderCancelDeleteTask = (function(){
+    let cancelButton = document.getElementById('cancelDeleteButton')
+    let modal = document.getElementById('modal')
+    cancelButton.addEventListener('click',function(){
+        modal.classList.remove('activeDeleteTask')
+    })
+})()
 
 function displayEditTask(e){
     e.stopPropagation()
@@ -381,6 +437,8 @@ export function renderOverviewContent(contentValue){
     
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
+    let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    oldDeleteTask.forEach(item=>item.removeEventListener('click',displayDeleteTask))
 
     let dropdownDisplay = document.getElementById('dropdownDisplay')
     let sortContainer = document.getElementById('sortContainer')
@@ -405,13 +463,15 @@ export function renderOverviewContent(contentValue){
     console.log(mySortedTask)
     
 
-    mySortedTask.forEach(item=>renderTaskData(item))
+    mySortedTask.forEach(item=>{if(item.removed!==true)renderTaskData(item)})
     displaySortList()
     renderTaskCompletionListener()
     renderSortedListListener()
 
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click', displayEditTask))
+    let deleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    deleteTask.forEach(item=>item.addEventListener('click',displayDeleteTask))
 
     
 }
@@ -548,6 +608,8 @@ export function renderProjectContent(contentValue){
 
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
+    let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    oldDeleteTask.forEach(item=>item.removeEventListener('click',displayDeleteTask))
 
     let header = document.getElementById('contentHeader')
     header.classList.remove('milestoneHeader')
@@ -562,11 +624,14 @@ export function renderProjectContent(contentValue){
     console.log(mySortedTask)
     
     displaySortList()
-    mySortedTask.forEach(item => renderTaskData(item))
+    mySortedTask.forEach(item => {if (item.removed!==true)renderTaskData(item)})
+
     let contentHeader = document.getElementById('contentHeader')
     contentHeader.innerText = contentValue
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click',displayEditTask))
+    let deleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    deleteTask.forEach(item=>item.addEventListener('click',displayDeleteTask))
 
     renderTaskCompletionListener()
 }
@@ -763,6 +828,8 @@ function renderSortedContent(){
 
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
+    let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    oldDeleteTask.forEach(item=>item.removeEventListener('click',displayDeleteTask))
 
     sort.sortByProject(this.innerText)
     console.log(mySortedTask)
@@ -773,13 +840,15 @@ function renderSortedContent(){
     removeActiveSortList()
     this.classList.add('active')
 
-    if(overviewItem.innerText !== "Milestone") mySortedListedTask.forEach(item=>renderTaskData(item))
+    if(overviewItem.innerText !== "Milestone") mySortedListedTask.forEach(item=>{if (item.removed!==true)renderTaskData(item)})
     else{
         mySortedListedTask.forEach(item=>renderMilestoneData(item))
     }
     
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click',displayEditTask))
+    let deleteTask = Array.from(document.getElementsByClassName('trashTask'))
+    deleteTask.forEach(item=>item.addEventListener('click',displayDeleteTask))
 
     renderTaskCompletionListener()
 }

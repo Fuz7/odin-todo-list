@@ -41,18 +41,7 @@
             <span id="addProjectButton" class="addProjectButton"></span>
         </div>
         <div id="projectList" class="projectList">
-            <div class="">
-                <p>Project 1</p>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div>
-                <p>Project 2</p>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      
         </div>
     </div>
     <div class="content">
@@ -70,7 +59,6 @@
             
         </div>
         <div class="contentBody" id="contentBody">
-         
         </div>
         </div>
     </div>
@@ -161,11 +149,43 @@
                 </div>
                 <div class="modalDeleteBody">
                     <p>Are you sure?</p>
-                    <p id="modalDeleteTaskTextBody">Task Coding will be deleted <span>forever</span></p>
+                    <p id="modalDeleteTaskTextBody"> <span>forever</span></p>
                 </div>
                 <div class="modalDeleteButtonContainer">
                     <button type="button" id="cancelDeleteButton" class="cancelDeleteButton">Cancel</button>
                     <button type="button" id="DeleteButton" class="DeleteButton">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="modalInfoContainer">
+            <div class="modalInfoCard">
+                <div class="modalInfoHeader">
+                    <p>Task Info</p>
+                </div>
+                <div class="modalInfoBody">
+                    <div class="titleInfo">
+                        <div class="infoSubHeader">Title:</div>
+                        <div id="infoTitle" class="infoData"></div>
+                    </div>
+                    <div class="descInfo">
+                        <div class="infoSubHeader">Description:</div>
+                        <div id="infoDesc" class="infoData textarea"></div>
+                    </div>
+                    <div class="projectInfo">
+                        <div class="infoSubHeader">Project:</div>
+                        <div id="infoProject" class="infoData"></div>
+                    </div>
+                    <div class="dueDateInfo">
+                        <div class="infoSubHeader">Due Date:</div>
+                        <div id="infoDue" class="infoData"></div>
+                    </div>
+                    <div class="dateCompletionInfo">
+                        <div class="infoSubHeader">Date Completion:</div>
+                        <div id="infoCompletion" class="infoData"></div>
+                    </div>
+                </div>
+                <div class="modalInfoButtonContainer">
+                    <button type="button" id="cancelInfoButton" class="cancelInfoButton">Cancel</button>
                 </div>
             </div>
         </div>

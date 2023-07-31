@@ -41,7 +41,7 @@
             <span id="addProjectButton" class="addProjectButton"></span>
         </div>
         <div id="projectList" class="projectList">
-            <div class="active">
+            <div class="">
                 <p>Project 1</p>
                 <span></span>
                 <span></span>
@@ -92,8 +92,8 @@
                             <label for="descAdd">Description</label>
                         </div>
                         <div class="dateAddContainer">
-                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-32">
-                            <label for="date">Due Date</label>
+                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-31">
+                            <label for="dateAdd">Due Date</label>
                             <span>Invalid date.</span>
                         </div>
                         <div class="projectAddContainer">
@@ -115,6 +115,45 @@
                     </div>
                 </div>
         </div>
+        <div class="modalEditContainer">
+            <div class="modalEditCard">
+                <div class="modalEditHeader">
+                    <p>Edit Task</p>
+                </div>
+                <div class="modalEditBody">
+                    <div class="titleEditContainer">
+                        <input type="text" id="titleEdit" class="titleEdit editForm" placeholder=" ">
+                        <label for="titleEdit">Title <span>*</span></label>
+                        <span>Please fill out this field.</span>
+                    </div>
+                    <div class="descriptionEditContainer">
+                        <textarea name="" id="descEdit" class="descEdit editForm" cols="30" rows="10" placeholder=" "></textarea>
+                        <label for="descEdit">Description</label>
+                    </div>
+                    <div class="dateEditContainer">
+                        <input type="date" name="" class="dateEdit editForm" id="dateEdit" min="2000-01-01" max="2099-12-31">
+                        <label for="date">Due Date</label>
+                        <span>Invalid date.</span>
+                    </div>
+                    <div class="projectEditContainer">
+                        <select id="projectEdit" class="">
+                            <option value="General" disabled selected>Project</option>
+                            <option value="General">General</option>
+                            <option value="Project1">Project1</option>
+                        </select>
+                        <label for="">Project</label>
+                    </div>
+                    <div class="milestoneEditContainer">
+                        <input type="checkbox" class="" value="checked" name="" id="milestoneEdit">
+                        <label for="milestoneEdit"><span>Milestone</span></label>
+                    </div>
+                </div>
+                <div class="modalButtonEditContainer">
+                    <button type="button" id="cancelEditButton" class="cancelEditButton">Cancel</button>
+                    <button type="button" id="editButton" class="editButton">Edit</button>
+                </div>
+            </div>
+        </div>
         <div class="modalAddProjectContainer">
                 <div class="modalAddProjectCard">
                     <div class="modalProjectHeader">
@@ -124,7 +163,7 @@
                         <div class="titleAddProjectContainer">
                             <input type="text" id="projectTitleAdd" class="projectTitleAdd" placeholder=" ">
                             <label for="projectTitleAdd">Title <span>*</span></label>
-                            <span>Please fill out this field</span>
+                            <span id="addErrorSpan">Please fill out this field.</span>
                         </div>                        
                     </div>
                     <div class="modalProjectButtonContainer">
@@ -145,6 +184,24 @@
                 <div class="modalDeleteProjectButtonContainer">
                     <button type="button" id="cancelDeleteProjectButton" class="cancelDeleteProjectButton">Cancel</button>
                     <button type="button" id="DeleteProjectButton" class="DeleteProjectButton">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="modalEditProjectContainer">
+            <div class="modalEditProjectCard">
+                <div class="modalEditProjectHeader">
+                    <p>Edit Project</p>
+                </div>
+                <div class="modalEditProjectBody">
+                    <div class="titleEditProjectContainer">
+                        <input type="text" id="projectEditTitle" class="projectEditTitle" placeholder=" ">
+                        <label for="projectEditTitle">Title</label>
+                        <span id="editErrorSpan">Please fill out this field.</span>
+                    </div>
+                </div>
+                <div class="modalProjectButtonContainer">
+                    <button type="button" id="cancelEditProjectButton" class="cancelProjectButton">Cancel</button>
+                    <button type="button" id="EditProjectButton" class="editProjectButton">Edit</button>
                 </div>
             </div>
         </div>

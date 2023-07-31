@@ -5,77 +5,8 @@ import { removeActive, renderOverviewContent, renderProjectContent, renderProjec
 
 
 
-export function checkValidity(){
 
 
-    let titleInput = document.getElementById('titleAdd')
-    let dateInput = document.getElementById('dateAdd')
-
-
-    if (titleInput.value === "" && (!(dateInput.checkValidity()))){
-        titleInput.classList.add('invalid')
-        dateInput.classList.add('invalid')
-        return false
-    }
-
-    if (titleInput.value === ""){
-        titleInput.classList.add('invalid')
-        return false
-    } 
-    
-    
-    if (!(dateInput.checkValidity())){
-        dateInput.classList.add('invalid')
-        return false
-    }
-
-    return true
-
-}
-
-export function checkTitleInput(){
-    
-    let titleInput = document.getElementById('titleAdd')
-
-    if (titleInput.value !== ""){
-        titleInput.classList.remove('invalid')
-    }
-
-}
-
-export function checkProjectValidity(){
-
-    let titleInput = document.getElementById('projectTitleAdd')
-
-    if (titleInput.value === ""){
-        titleInput.classList.add('invalid')
-        return false
-    }
-
-    return true
-
-}
-
-export function checkProjectTitleInput(){
-
-    let titleInput = document.getElementById('projectTitleAdd')
-
-    if (titleInput.value !== ""){
-        titleInput.classList.remove('invalid')
-    }    
-    
-
-}
-
-export function checkDateInput(){
-
-    let dateInput = document.getElementById('dateAdd')
-
-    if (dateInput.checkValidity()){
-        dateInput.classList.remove('invalid')
-    }
-
-}
 
 
 export function getCurrentDatePH(){
@@ -157,6 +88,22 @@ document.getElementById('milestoneAdd').checked = false
 
 document.getElementById('titleAdd').classList.remove('invalid')
 document.getElementById('dateAdd').classList.remove('invalid')
+document.getElementById('projectAdd').classList.remove('active')
+document.getElementById('dateAdd').classList.remove('active')
+}
+
+export function emptyEditInputs(){
+
+document.getElementById('titleEdit').value = ""
+document.getElementById('descEdit').value = ""
+document.getElementById('dateEdit').value = ""
+document.getElementById('projectEdit').value = "General"
+document.getElementById('milestoneEdit').checked = false
+
+document.getElementById('titleEdit').classList.remove('invalid')
+document.getElementById('dateEdit').classList.remove('invalid')
+document.getElementById('projectEdit').classList.remove('active')
+document.getElementById('dateEdit').classList.remove('active')
 
 }
 

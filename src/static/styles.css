@@ -213,6 +213,16 @@ body{
     color: black;
 }
 
+
+.projectList > div > span:nth-of-type(1),
+.projectList > div > span:nth-of-type(2){
+    transition: transform 0.2s;
+}
+.projectList > div > span:nth-of-type(1):hover,
+.projectList > div > span:nth-of-type(2):hover{
+    transform: scale(1.3);
+}
+
 .projectList > div.active > span:nth-of-type(3),
 .overviewList > div.active > span:nth-of-type(2){
     position: absolute;
@@ -257,23 +267,29 @@ body{
 
 
 .modal .modalAddCard,
+.modal .modalEditCard,
 .modal .modalAddProjectCard,
-.modal .modalDeleteProjectCard{
+.modal .modalDeleteProjectCard,
+.modal .modalEditProjectCard{
     visibility: hidden;
     transform: scale(0.5);
     transition: transform 400ms cubic-bezier(0.18,0.89,0.43,1.19);
 }
 
 .modal.active,
+.modal.activeEditTask,
 .modal.activeProject,
-.modal.activeDeleteProject{
+.modal.activeDeleteProject,
+.modal.activeEditProject{
     visibility: visible;
     z-index: 3;
 }
 
 .modal.active .modalAddCard,
+.modal.activeEditTask .modalEditCard,
 .modal.activeProject .modalAddProjectCard,
-.modal.activeDeleteProject .modalDeleteProjectCard{
+.modal.activeDeleteProject .modalDeleteProjectCard,
+.modal.activeEditProject .modalEditProjectCard{
     visibility: visible;
     transform: scale(1);
 }
@@ -281,8 +297,10 @@ body{
 
 
 .modalAddContainer,
+.modalEditContainer,
 .modalAddProjectContainer,
-.modalDeleteProjectContainer{
+.modalDeleteProjectContainer,
+.modalEditProjectContainer{
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -295,22 +313,27 @@ body{
     z-index: 3;
 }
 
+.modalEditContainer,
 .modalAddProjectContainer,
-.modalDeleteProjectContainer{
+.modalDeleteProjectContainer,
+.modalEditProjectContainer{
     visibility: hidden;
     position: absolute;
     top: 0px;
     left: 0px;
-    z-index: -1;
+    z-index: 1;
 }
 
+.modal.activeEditProject .modalEditContainer,
 .modal.activeProject .modalAddProjectContainer,
-.modal.activeDeleteProject .modalDeleteProjectContainer{
+.modal.activeDeleteProject .modalDeleteProjectContainer,
+.modal.activeEditProject .modalEditProjectContainer{
     visibility: visible;
     z-index: 3;
 }
 
-.modalAddCard{
+.modalAddCard,
+.modalEditCard{
     width: 400px;
     height: 650px;
     background-color: var(--sidebar); 
@@ -321,7 +344,8 @@ body{
 
 
 .modalAddProjectCard,
-.modalDeleteProjectCard{
+.modalDeleteProjectCard,
+.modalEditProjectCard{
     width: 400px;
     height: 282px;
     background-color: var(--sidebar);
@@ -333,8 +357,10 @@ body{
 
 
 .modalHeader,
+.modalEditHeader,
 .modalProjectHeader,
-.modalDeleteProjectHeader{
+.modalDeleteProjectHeader,
+.modalEditProjectHeader{
     grid-row: 1/2;
     grid-column: 1/2;
     background-color: var(--purple);
@@ -352,7 +378,9 @@ body{
 }
 
 .modalBody,
-.modalProjectBody{
+.modalEditBody,
+.modalProjectBody,
+.modalEditProjectBody{
     padding: 0px 35px;
 }
 
@@ -380,34 +408,45 @@ form{
 }
 
 .titleAddContainer,
-.descriptionAddContainer{
+.titleEditContainer,
+.descriptionAddContainer,
+.descriptionEditContainer{
     margin-top: 58px;
     position: relative;
 }
 
-.titleAddProjectContainer{
+.titleAddProjectContainer,
+.titleEditProjectContainer{
     margin-top: 49px;
     position: relative;
 }
 
 .dateAddContainer,
-.projectAddContainer{
+.dateEditContainer,
+.projectAddContainer,
+.projectEditContainer{
     margin-top: 57px;
     position: relative;
 }
 
 
 
-.milestoneAddContainer{
+.milestoneAddContainer,
+.milestoneEditContainer{
     margin-top: 27px;
     position: relative;
+    cursor: pointer;
 }
 
 
 .modalBody > div > input:not([type=checkbox]),
 .modalBody > div > select,
+.modalEditBody > div > input:not([type=checkbox]),
+.modalEditBody > div > select,
 .milestoneAddContainer > label,
-.titleAddProjectContainer > input{
+.milestoneEditContainer > label,
+.titleAddProjectContainer > input,
+.titleEditProjectContainer > input{
     width: 330px;
     height: 33px;
     background-color: var(--background-color);
@@ -416,29 +455,44 @@ form{
     border-radius: 2px;
 }
 
-.milestoneAddContainer > label{
+.milestoneAddContainer > label,
+.milestoneEditContainer > label{
     background-color: var(--sidebar-font-color);
     border: 0px;
     display: block;
+    cursor: pointer;
+}
+
+.milestoneAddContainer > input,
+.milestoneEditContainer > input{
+    cursor: pointer;
 }
 
 
-
 .titleAddContainer > label > span,
-.titleAddProjectContainer > label span{
+.titleEditContainer > label > span,
+.titleAddProjectContainer > label > span,
+.titleEditProjectContainer > label > span{
     color: var(--red);
 }
 
 .titleAddContainer > input:focus ~ label > span,
 .titleAddContainer > input:not(:placeholder-shown) ~ label > span,
+.titleEditContainer > input:focus ~ label > span,
+.titleEditContainer > input:not(:placeholder-shown) ~ label > span,
 .titleAddProjectContainer > input:focus ~ label > span,
-.titleAddProjectContainer > input:not(:placeholder-shown) ~ label > span{
+.titleAddProjectContainer > input:not(:placeholder-shown) ~ label > span,
+.titleEditProjectContainer > input:focus ~ label > span,
+.titleEditProjectContainer > input:not(:placeholder-shown) ~ label > span{
     display: none;
 }
 
 .titleAdd ~ span,
+.titleEdit ~ span,
 .dateAdd ~ span,
-.projectTitleAdd ~ span{
+.dateEdit ~ span,
+.projectTitleAdd ~ span,
+.projectEditTitle ~ span{
     visibility: hidden;
     position: absolute;
     bottom: 0px;
@@ -450,14 +504,18 @@ form{
 }
 
 .titleAdd.invalid ~ span,
+.titleEdit.invalid ~ span,
 .dateAdd.invalid ~ span,
-.projectTitleAdd.invalid ~ span{
+.dateEdit.invalid ~ span,
+.projectTitleAdd.invalid ~ span,
+.projectEditTitle.invalid ~ span{
     visibility: visible;
     bottom: -20px;
 }
 
 
-.descriptionAddContainer > textarea{
+.descriptionAddContainer > textarea,
+.descriptionEditContainer > textarea{
     width: 330px;
     height: 78px;
     background-color: var(--background-color);
@@ -468,16 +526,22 @@ form{
 
 
 .titleAddContainer input:focus-visible,
+.titleEditContainer input:focus-visible,
 .descriptionAddContainer > textarea:focus-visible,
+.descriptionEditContainer > textarea:focus-visible,
 .dateAddContainer > input:focus-visible,
+.dateEditContainer > input:focus-visible,
 .projectAddContainer > select:focus-visible,
-.titleAddProjectContainer > input:focus-visible{
+.projectEditContainer > select:focus-visible,
+.titleAddProjectContainer > input:focus-visible,
+.titleEditProjectContainer > input:focus-visible{
     outline: solid 2px black;
     border-radius: 2px;
     border-bottom: 0px;
 }
 
-.projectAddContainer > select{
+.projectAddContainer > select,
+.projectEditContainer > select{
     font-size: 20px;
     font-family: 'Patua';
     color: var(--sidebar-font-color);
@@ -485,26 +549,35 @@ form{
 }
 
 .titleAddContainer label,
+.titleEditContainer label,
 .descriptionAddContainer label,
+.descriptionEditContainer label,
 .dateAddContainer label,
+.dateEditContainer label,
 .projectAddContainer label,
+.projectEditContainer label,
 .milestoneAddContainer label > span,
-.titleAddProjectContainer label{
+.milestoneEditContainer label > span,
+.titleAddProjectContainer label,
+.titleEditProjectContainer label{
     position: absolute;
     left: 12px;
     top: 5px;
     color: var(--placeholder);
     font-family: 'Patua';
     font-size: 20px;
+    user-select: none;
     transition: background-color 0.3s ease, color 0.3s ease, left 0.3s ease, top 0.3s ease, border-radius 0.3s ease
 }
 
-.milestoneAddContainer label > span{
+.milestoneAddContainer label > span,
+.milestoneEditContainer label > span{
     color: var(--background-color);
     user-select: none;
 }
 
-.milestoneAddContainer input{
+.milestoneAddContainer input,
+.milestoneEditContainer input{
     position: absolute;
     right: 10px; 
     top: 5px;
@@ -513,27 +586,43 @@ form{
     margin: 0px;
 }
 
-.milestoneAddContainer input:checked{
+.milestoneAddContainer input:checked,
+.milestoneEditContainer input:checked{
     accent-color: var(--gold);
 }
 
-.milestoneAddContainer input:checked ~ label{
+.milestoneAddContainer input:checked ~ label,
+.milestoneEditContainer input:checked ~ label{
     background-color: var(--purple);
 }
 
 .dateAddContainer label,
-.projectAddContainer label{
+.dateEditContainer label,
+.projectAddContainer label,
+.projectEditContainer label{
     visibility: hidden;
 }
 
 .titleAddContainer input:focus ~ label,
 .titleAddContainer input:not(:placeholder-shown) ~ label,
+.titleEditContainer input:focus ~ label,
+.titleEditContainer input:not(:placeholder-shown) ~ label,
 .descriptionAddContainer textarea:focus ~ label,
 .descriptionAddContainer textarea:not(:placeholder-shown) ~ label,
+.descriptionEditContainer textarea:focus ~ label,
+.descriptionEditContainer textarea:not(:placeholder-shown) ~ label,
 .dateAddContainer input:focus ~ label,
+.dateAddContainer input.active ~ label,
+.dateEditContainer input:focus ~ label,
+.dateEditContainer input.active ~ label,
 .projectAddContainer select:focus ~ label,
+.projectAddContainer select.active ~ label,
+.projectEditContainer select:focus ~ label,
+.projectEditContainer select.active ~ label,
 .titleAddProjectContainer input:focus ~ label,
-.titleAddProjectContainer input:not(:placeholder-shown) ~ label{
+.titleAddProjectContainer input:not(:placeholder-shown) ~ label,
+.titleEditProjectContainer select:focus ~ label,
+.titleEditProjectContainer input:not(:placeholder-shown) ~ label{
     visibility: visible;
     left: 0px;
     top: -31px;
@@ -545,13 +634,17 @@ form{
 
 .projectTitleAdd,
 .titleAdd,
+.titleEdit,
 .descAdd,
-.dateAdd{
+.dateAdd,
+.dateEdit,
+.projectEditTitle{
     font-size: 20px;
 }
 
 
 .modalButtonContainer,
+.modalButtonEditContainer,
 .modalProjectButtonContainer,
 .modalDeleteProjectButtonContainer{
     grid-row: 3/4;
@@ -564,8 +657,11 @@ form{
 }
 
 .cancelButton,
+.cancelEditButton,
 .submitButton,
+.editButton,
 .submitProjectButton,
+.editProjectButton,
 .cancelProjectButton,
 .cancelDeleteProjectButton,
 .DeleteProjectButton{
@@ -577,17 +673,22 @@ form{
     border: 0px;
     border: 1px solid black;
     border-radius: 2px;
+    user-select: none;
 }
 
 .submitButton,
-.submitProjectButton{
+.editButton,
+.submitProjectButton,
+.editProjectButton{
     background-color: var(--purple);
     border: 1px solid black;
     color: var(--background-color);
 }
 
 .submitButton:hover,
-.submitProjectButton:hover{
+.editButton:hover,
+.submitProjectButton:hover,
+.editProjectButton:hover{
     background-color: #480bca;
 }
 
@@ -601,9 +702,15 @@ form{
 }
 
 .cancelButton:hover,
+.cancelEditButton:hover,
 .cancelProjectButton:hover,
 .cancelDeleteProjectButton:hover{
     background-color: #e3e3e3;
+}
+
+#EditProjectButton,
+.editButton{
+    padding: 6.2px 20px;
 }
 
 .content{
@@ -698,10 +805,13 @@ form{
 
 }
 
-.contentBody{
+.contentBody {
     margin-top: 32px;
     width: 100%;
+    user-select: none;
 }
+
+
 
 .taskData,
 .milestoneData{
@@ -796,6 +906,10 @@ form{
 
 .checkboxContainer input:checked + label::after{
     opacity: 1;
+}
+
+.checkboxContainer input{
+    z-index: -1;
 }
 
 .leftSideData,

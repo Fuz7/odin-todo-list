@@ -1,7 +1,10 @@
+import { format, parse } from 'date-fns'
 import * as add from './add.js'
+import * as check from './check.js'
 import { myProject, myTask, mySortedTask, emptySortedTask, setMyTaskDateCompletion, 
          taskListeners, emptyTaskListeners, Project, mySortedListedTask, sortListListeners} from './class.js'
 import { deleteProject } from './delete.js'
+import { editProject, editMyTask } from './edit.js'
 import * as sort from './sort.js'
 
 export let renderProjectSidebar = function(){
@@ -24,12 +27,12 @@ export let renderProjectSidebar = function(){
         div.classList.add('project')
         div.setAttribute('data-project',item.projectId)
         let span1 = document.createElement('span')
+        span1.classList.add('sideEditProject')
+        span1.setAttribute('data-project-edit',item.projectId)
         let span2 = document.createElement('span')
         span2.setAttribute('data-project-delete',item.projectId)
         span2.classList.add('sideDeleteProject')
         let span3 = document.createElement('span')
-        span3.classList.add('sideEditProject')
-        span3.setAttribute('data-project-edit',item.projectId)
         div.innerHTML = item.title
         div.append(span1)
         div.append(span2)
@@ -41,6 +44,7 @@ export let renderProjectSidebar = function(){
 
     let projects = Array.from(document.getElementsByClassName('project'))
     let deleteButton = Array.from(document.getElementsByClassName('sideDeleteProject'))
+    let editButton = Array.from(document.getElementsByClassName('sideEditProject'))
 
     projects.forEach(item =>{
         item.addEventListener('click',toggleProjectActive)
@@ -48,10 +52,149 @@ export let renderProjectSidebar = function(){
     })
 
     deleteButton.forEach(item=>{
-        item.addEventListener('click',displayDeleteProject  )
+        item.addEventListener('click',displayDeleteProject)
     })
     
+    editButton.forEach(item =>{
+        item.addEventListener('click',displayEditProject)
+    })
+
+
 }
+
+
+function displayEditTask(e){
+    e.stopPropagation()
+    let taskId = e.currentTarget.getAttribute('data-task')
+    let modal = document.getElementById('modal')
+    modal.classList.add('activeEditTask')
+    let editButton = document.getElementById('editButton')
+    editButton.setAttribute('data-editTaskId',taskId)
+
+    let editedTask = myTask.find(item=>item.taskId === Number(taskId))
+
+    let textInput = document.getElementById('titleEdit')
+    let descInput = document.getElementById('descEdit')
+    let dateInput = document.getElementById('dateEdit')
+    let projectInput = document.getElementById('projectEdit')
+    let milestoneInput = document.getElementById('milestoneEdit')
+
+    let date = parse(editedTask.date,"MM/dd/yyyy",new Date())
+    date.setHours(date.getHours() + 8)
+    textInput.value = editedTask.title
+    descInput.value = editedTask.description
+    dateInput.valueAsDate = date
+    projectInput.value = editedTask.project
+    milestoneInput.checked = editedTask.milestone
+
+    if (dateInput.value !== ''){
+        dateInput.classList.add('active')
+    }   
+    projectInput.classList.add('active')
+    
+}
+
+let renderEditButton = (function(){
+    let editButton = document.getElementById('editButton')
+    let modal = document.getElementById('modal')
+
+    let titleInput = document.getElementById('titleEdit')
+    let descInput = document.getElementById('descEdit')
+    let dateInput = document.getElementById('dateEdit')
+    let projectInput = document.getElementById('projectEdit')
+    let milestoneInput = document.getElementById('milestoneEdit')
+    editButton.addEventListener('click',()=>{
+        if(check.checkEditTaskValidity()){
+            let taskId = editButton.getAttribute('data-edittaskid')
+            let milestoneValue = (milestoneInput.checked)? true: false 
+
+            let formattedDate = ''
+            if (dateInput.value !==''){
+                let date = dateInput.valueAsDate
+                formattedDate = format(date,'MM/dd/yyyy')
+            }
+            editMyTask(taskId,titleInput.value,descInput.value,
+                       formattedDate,projectInput.value,milestoneValue)
+            let headerContent = document.getElementById('contentHeader').textContent
+            if(headerContent === 'Inbox' || headerContent === 'Today' || headerContent === "Week"){
+                renderOverviewContent(headerContent)
+            } else{
+                renderProjectContent(headerContent)
+            }
+            modal.classList.remove('activeEditTask')
+            add.emptyEditInputs()
+
+        }
+    })
+})()
+
+
+let renderCancelEditTask = (function(){
+    let cancelButton = document.getElementById('cancelEditButton')
+    let modal = document.getElementById('modal')
+    let editForm = Array.from(document.getElementsByClassName('editForm'))
+    let projectEdit = document.getElementById('projectEdit')
+
+    cancelButton.addEventListener('click',()=>{
+        modal.classList.remove('activeEditTask')
+        add.emptyEditInputs()
+    })
+
+    
+})()
+
+function displayEditProject(e){
+    e.stopPropagation()
+    let projectName = e.currentTarget.parentElement.innerText
+    let projectId = e.currentTarget.parentElement.getAttribute('data-project')
+    let modal = document.getElementById('modal')
+    modal.classList.add('activeEditProject')
+
+    let textInput = document.getElementById('projectEditTitle')
+    textInput.value = projectName
+
+    let editButton = document.getElementById('EditProjectButton')
+    editButton.setAttribute('data-projecteditid', projectId)
+}
+
+let renderCancelEditButton = (function(){
+    let cancelButton = document.getElementById('cancelEditProjectButton')
+    let modal = document.getElementById('modal')
+    let textInput = document.getElementById('projectEditTitle')
+
+
+    cancelButton.addEventListener('click',function(){
+        modal.classList.remove('activeEditProject')
+        textInput.value = ''
+    })
+
+})()
+
+let renderEditProjectButton = (function(){
+    let editButton = document.getElementById('EditProjectButton')
+    let modal = document.getElementById('modal')
+    let textInput = document.getElementById('projectEditTitle')
+
+    editButton.addEventListener('click',function(){
+
+        let editId = editButton.getAttribute('data-projecteditid')
+        if(check.checkEditValidity()){
+            editProject(editId)
+            removeActive()
+            renderProjectSidebar()
+            let project = document.querySelector(`div[data-project="${editId}"]`) 
+            renderProjectContent(project.innerText)
+            displaySortList()
+            renderProjectList()
+            textInput.value = ''
+            project.classList.add('active')
+            modal.classList.remove('activeEditProject')
+            console.log(myProject)
+            console.log(myTask)
+        }
+        
+    })
+})()
 
 function displayDeleteProject(e){
     e.stopPropagation()
@@ -81,7 +224,7 @@ let renderCancelDeleteButton = (function(){
 let renderDeleteButton = (function(){
     let deleteButton = document.getElementById("DeleteProjectButton")
     let modal = document.getElementById('modal')
-    let header = document.getElementById('contentHeader')
+
 
     deleteButton.addEventListener('click',function(){
         let deleteId = deleteButton.getAttribute('data-projectdelid')
@@ -93,6 +236,7 @@ let renderDeleteButton = (function(){
         renderProjectSidebar()
         renderOverviewContent('Inbox')
         contentHeader.innerText = "Inbox"
+        
     })
 })()
 
@@ -121,14 +265,22 @@ let displayValidity = (function(){
     let cancelButton = document.getElementById('cancelButton')
     let titleInput = document.getElementById('titleAdd')
     let dateInput = document.getElementById('dateAdd')
+    let projectInput = document.getElementById('projectAdd')
     let modal = document.getElementById('modal')
 
-    titleInput.addEventListener('input', add.checkTitleInput) 
-    dateInput.addEventListener('input', add.checkDateInput)
+    titleInput.addEventListener('input', check.checkTitleInput) 
+    dateInput.addEventListener('input', check.checkDateInput)
+    projectInput.addEventListener('click', check.checkProjectInput)
+
+    let titleEditInput = document.getElementById('titleEdit')
+    let dateEditInput = document.getElementById('dateEdit')
+
+    titleEditInput.addEventListener('input', check.checkEditTitleInput)
+    dateEditInput.addEventListener('input', check.checkEditDateInput)
 
 
     submitButton.addEventListener('click', ()=>{
-        if(add.checkValidity() === true){
+        if(check.checkValidities() === true){
             add.addTask()
             modal.classList.remove('active')
         }
@@ -148,10 +300,10 @@ let displayProjectValidity = (function(){
     let modal = document.getElementById('modal')
     let cancelButton = document.getElementById('cancelProjectButton')
 
-    titleInput.addEventListener('input', add.checkProjectTitleInput)
+    titleInput.addEventListener('input', check.checkProjectTitleInput)
 
     submitButton.addEventListener('click',()=>{
-        if(add.checkProjectValidity() === true){
+        if(check.checkProjectValidity() === true){
             add.addProject()
             modal.classList.remove('activeProject')
             add.emptyProjectInput()
@@ -217,7 +369,7 @@ export function renderOverviewContent(contentValue){
     emptyEventListener()
     emptySortedTask()
     removeSortedListListener()
-
+    
     let dropdown = document.getElementById('dropdown')
     dropdown.classList.remove('hide')
     
@@ -227,6 +379,9 @@ export function renderOverviewContent(contentValue){
     contentHeader.classList.remove('milestoneHeader')
     contentHeader.innerText = contentValue
     
+    let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
+    oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
+
     let dropdownDisplay = document.getElementById('dropdownDisplay')
     let sortContainer = document.getElementById('sortContainer')
     let defaultOption = sortContainer.children[0]
@@ -249,10 +404,15 @@ export function renderOverviewContent(contentValue){
     }
     console.log(mySortedTask)
     
-    displaySortList()
+
     mySortedTask.forEach(item=>renderTaskData(item))
+    displaySortList()
     renderTaskCompletionListener()
     renderSortedListListener()
+
+    let editTask = Array.from(document.getElementsByClassName('editTask'))
+    editTask.forEach(item=>item.addEventListener('click', displayEditTask))
+
     
 }
 function renderTaskData(item){        
@@ -282,6 +442,7 @@ function renderTaskData(item){
     checkbox.setAttribute('type','checkbox')
     checkbox.setAttribute('id','checkbox' + item.taskId)
     checkbox.setAttribute('data-task', item.taskId)
+    checkbox.setAttribute('disabled',"disabled")
     if (item.dateCompletion !==''){
         checkbox.setAttribute('checked','')
     }
@@ -379,10 +540,14 @@ function renderMilestoneContent(){
 export function renderProjectContent(contentValue){
     emptySortedTask()
     emptyEventListener()
+    removeSortedListListener()
 
     let dropdown = document.getElementById('dropdown')
     dropdown.classList.add('hide')
     dropdown.classList.remove('active')
+
+    let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
+    oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
 
     let header = document.getElementById('contentHeader')
     header.classList.remove('milestoneHeader')
@@ -400,6 +565,8 @@ export function renderProjectContent(contentValue){
     mySortedTask.forEach(item => renderTaskData(item))
     let contentHeader = document.getElementById('contentHeader')
     contentHeader.innerText = contentValue
+    let editTask = Array.from(document.getElementsByClassName('editTask'))
+    editTask.forEach(item=>item.addEventListener('click',displayEditTask))
 
     renderTaskCompletionListener()
 }
@@ -461,7 +628,7 @@ function renderMilestoneData(item){
     leftSideMilestoneData.append(leftSpan)
     leftSideMilestoneData.append(taskText)
 
-    contentBody.append(milestoneData)
+    contentBody.prepend(milestoneData)
     milestoneData.append(leftSideMilestoneData)
 
 
@@ -503,22 +670,32 @@ function renderMilestoneData(item){
 export function renderProjectList(){
 
     let projectSelect = document.getElementById('projectAdd')
+    let projectEditSelect = document.getElementById('projectEdit')
+    projectEditSelect.innerHTML = ''
     projectSelect.innerHTML ='';
 
     
     let defaultOption = document.createElement('option')
     defaultOption.setAttribute('value',"General")
-    defaultOption.setAttribute('disabled','' )
     defaultOption.setAttribute('selected','')
-    defaultOption.innerText = "Project"
+    defaultOption.innerText = "General"
+    let defaultEditOption = document.createElement('option')
+    defaultEditOption.setAttribute('value',"General")
+    defaultEditOption.setAttribute('selected','')
+    defaultEditOption.innerText = "General"
 
     projectSelect.append(defaultOption)
+    projectEditSelect.append(defaultEditOption)
 
     myProject.forEach(item=>{
         let option = document.createElement('option')
         option.innerText = item.title
         option.setAttribute('value',item.title)
+        let editOption = document.createElement('option')
+        editOption.innerText = item.title
+        editOption.setAttribute('value',item.title)
         projectSelect.append(option)
+        projectEditSelect.append(editOption)
     })
 }
 
@@ -541,6 +718,10 @@ function displaySortList(){
     sortOptionDefault.innerHTML = 'Default'
     sortContainer.append(sortOptionDefault)
 
+    let sortOptionGeneral = document.createElement('div')
+    sortOptionGeneral.classList.add('sortOptions')
+    sortOptionGeneral.innerText = "General"
+    sortContainer.append(sortOptionGeneral)
     myProject.forEach(item=>{
         let sortOption = document.createElement('div')
         sortOption.classList.add('sortOptions')
@@ -567,6 +748,8 @@ function removeSortedListListener(){
 }
 
 function renderSortedContent(){
+    emptyEventListener()
+
     let overviewItem = document.getElementsByClassName('overviewItem active')[0]
     if (overviewItem.innerText === 'Inbox'){
         sort.sortInbox()
@@ -577,6 +760,9 @@ function renderSortedContent(){
     } else if(overviewItem.innerText === "Milestone"){
         sort.sortByMilestone()
     }
+
+    let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
+    oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
 
     sort.sortByProject(this.innerText)
     console.log(mySortedTask)
@@ -591,6 +777,11 @@ function renderSortedContent(){
     else{
         mySortedListedTask.forEach(item=>renderMilestoneData(item))
     }
+    
+    let editTask = Array.from(document.getElementsByClassName('editTask'))
+    editTask.forEach(item=>item.addEventListener('click',displayEditTask))
+
+    renderTaskCompletionListener()
 }
 
 

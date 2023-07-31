@@ -1,4 +1,4 @@
-import { emptyTask, myProject, myTask } from "./class";
+import { emptyTask, myProject, myTask, saveMyProjectToLocalStorage, saveMyTaskToLocalStorage } from "./class";
 
 export function deleteProject(id){
     let projectTitle
@@ -12,6 +12,8 @@ export function deleteProject(id){
     let remainingTask = myTask.filter(item => (item.project === projectTitle)? false: true)
     emptyTask()
     remainingTask.forEach(item=>myTask.push(item))
+    saveMyProjectToLocalStorage()
+    saveMyTaskToLocalStorage()
 }
 
 export function deleteTask(id){
@@ -29,4 +31,5 @@ export function deleteTask(id){
             break;
         }
     }
+    saveMyTaskToLocalStorage()
 }

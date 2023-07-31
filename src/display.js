@@ -2,7 +2,7 @@ import { format, parse } from 'date-fns'
 import * as add from './add.js'
 import * as check from './check.js'
 import { myProject, myTask, mySortedTask, emptySortedTask, setMyTaskDateCompletion, 
-         taskListeners, emptyTaskListeners, Project, mySortedListedTask, sortListListeners} from './class.js'
+         taskListeners, emptyTaskListeners, Project, mySortedListedTask, sortListListeners, saveMyTaskToLocalStorage} from './class.js'
 import { deleteProject, deleteTask } from './delete.js'
 import { editProject, editMyTask } from './edit.js'
 import * as sort from './sort.js'
@@ -94,6 +94,51 @@ function displayDeleteTask(e){
         textbody.innerHTML = 'Task ' + taskName + ' will be deleted <span>forever<span>'
     }
 }
+
+function displayInfoTask(e){
+    e.stopPropagation()
+    let taskId = e.currentTarget.getAttribute('data-task')
+    let modal = document.getElementById('modal')
+    let task = myTask.find(item=>item.taskId === Number(taskId))
+    let title = task.title
+    let desc = task.description
+    let project = task.project
+    let date = task.date
+    let dateCompletion = task.dateCompletion
+
+    let titleInput = document.getElementById('infoTitle')
+    let descInput = document.getElementById('infoDesc')
+    let projectInput = document.getElementById('infoProject')
+    let dateInput = document.getElementById('infoDue')
+    let dateCompletionInput = document.getElementById('infoCompletion')
+
+    titleInput.innerText = title
+    descInput.innerText = desc
+    projectInput.innerText = project
+    dateInput.innerText = date
+    dateCompletionInput.innerText = dateCompletion
+
+    modal.classList.add('activeInfoTask')
+}
+
+let renderCancelInfoButton = (function(){
+    let modal = document.getElementById('modal')
+    let cancelButton = document.getElementById('cancelInfoButton')
+    let titleInput = document.getElementById('infoTitle')
+    let descInput = document.getElementById('infoDesc')
+    let projectInput = document.getElementById('infoProject')
+    let dateInput = document.getElementById('infoDue')
+    let dateCompletionInput = document.getElementById('infoCompletion')
+
+    cancelButton.addEventListener('click',function(){
+        titleInput.innerHTML = ''
+        descInput.innerHTML = ''
+        projectInput.innerHTML = ''
+        dateInput.innerHTML = ''
+        dateCompletionInput.innerHTML = ''
+        modal.classList.remove('activeInfoTask')
+    })
+})()   
 
 let renderDeleteTaskButton = (function(){
     let deleteButton = document.getElementById('DeleteButton')
@@ -292,8 +337,9 @@ let renderDeleteButton = (function(){
         renderProjectSidebar()
         renderOverviewContent('Inbox')
         contentHeader.innerText = "Inbox"
-        
+        renderProjectList()
     })
+    
 })()
 
 let toggleProjectActive = function(project){
@@ -434,7 +480,9 @@ export function renderOverviewContent(contentValue){
     contentHeader.classList.add('inboxHeader')
     contentHeader.classList.remove('milestoneHeader')
     contentHeader.innerText = contentValue
-    
+   
+    let oldInfoTask = Array.from(document.getElementsByClassName('infoTask'))
+    oldInfoTask.forEach(item=>item.removeEventListener('click',displayInfoTask))
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
     let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
@@ -468,6 +516,8 @@ export function renderOverviewContent(contentValue){
     renderTaskCompletionListener()
     renderSortedListListener()
 
+    let infoTask = Array.from(document.getElementsByClassName('infoTask'))
+    infoTask.forEach(item=>item.addEventListener('click',displayInfoTask))
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click', displayEditTask))
     let deleteTask = Array.from(document.getElementsByClassName('trashTask'))
@@ -576,6 +626,8 @@ function renderMilestoneContent(){
 
     let dropdown = document.getElementById('dropdown')
     dropdown.classList.remove('hide')
+    let oldInfoTask = Array.from(document.getElementsByClassName('infoTask'))
+    oldInfoTask.forEach(item=>item.removeEventListener('click',displayInfoTask))
     
     let dropdownDisplay = document.getElementById('dropdownDisplay')
     let sortContainer = document.getElementById('sortContainer')
@@ -594,6 +646,8 @@ function renderMilestoneContent(){
     sort.sortByMilestone()
     displaySortList()
     mySortedTask.forEach(item => renderMilestoneData(item));
+    let infoTask = Array.from(document.getElementsByClassName('infoTask'))
+    infoTask.forEach(item=>item.addEventListener('click',displayInfoTask))
     renderSortedListListener()
 }
 
@@ -606,6 +660,8 @@ export function renderProjectContent(contentValue){
     dropdown.classList.add('hide')
     dropdown.classList.remove('active')
 
+    let oldInfoTask = Array.from(document.getElementsByClassName('infoTask'))
+    oldInfoTask.forEach(item=>item.removeEventListener('click',displayInfoTask))
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
     let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
@@ -628,6 +684,9 @@ export function renderProjectContent(contentValue){
 
     let contentHeader = document.getElementById('contentHeader')
     contentHeader.innerText = contentValue
+
+    let infoTask = Array.from(document.getElementsByClassName('infoTask'))
+    infoTask.forEach(item=>item.addEventListener('click',displayInfoTask))
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click',displayEditTask))
     let deleteTask = Array.from(document.getElementsByClassName('trashTask'))
@@ -668,7 +727,7 @@ function toggleCompletion(){
         setMyTaskDateCompletion(this.getAttribute('data-task'),'')
         checkbox.removeAttribute('checked')
     }
-    console.log(myTask)
+    saveMyTaskToLocalStorage()
 }
 
 function renderMilestoneData(item){
@@ -723,6 +782,7 @@ function renderMilestoneData(item){
     
     let infoTask = document.createElement('div')
     infoTask.classList.add('infoTask')
+    infoTask.setAttribute('data-task',item.taskId)
 
     rightSideMilestoneData.append(separator)
     rightSideMilestoneData.append(infoTask)
@@ -826,6 +886,8 @@ function renderSortedContent(){
         sort.sortByMilestone()
     }
 
+    let oldInfoTask = Array.from(document.getElementsByClassName('infoTask'))
+    oldInfoTask.forEach(item=>item.removeEventListener('click',displayInfoTask))
     let oldEditTask = Array.from(document.getElementsByClassName('editTask'))
     oldEditTask.forEach(item=>item.removeEventListener('click',displayEditTask))
     let oldDeleteTask = Array.from(document.getElementsByClassName('trashTask'))
@@ -845,6 +907,8 @@ function renderSortedContent(){
         mySortedListedTask.forEach(item=>renderMilestoneData(item))
     }
     
+    let infoTask = Array.from(document.getElementsByClassName('infoTask'))
+    infoTask.forEach(item=>item.addEventListener('click',displayInfoTask))
     let editTask = Array.from(document.getElementsByClassName('editTask'))
     editTask.forEach(item=>item.addEventListener('click',displayEditTask))
     let deleteTask = Array.from(document.getElementsByClassName('trashTask'))

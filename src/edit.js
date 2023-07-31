@@ -1,4 +1,4 @@
-import { emptyTask, myProject, myTask } from "./class";
+import { emptyTask, myProject, myTask, saveMyProjectToLocalStorage, saveMyTaskToLocalStorage } from "./class";
 
 export function editProject(id){
     
@@ -24,7 +24,8 @@ export function editProject(id){
     sortedTask.forEach(item=>{
         myTask.push(item)
     })
-     
+    saveMyProjectToLocalStorage()
+    saveMyTaskToLocalStorage() 
 }
 
 export function editMyTask(id,title,desc,date,project,milestone){
@@ -34,4 +35,5 @@ export function editMyTask(id,title,desc,date,project,milestone){
     selectedTask.date = date
     selectedTask.project = project
     selectedTask.milestone = milestone
+    saveMyTaskToLocalStorage()
 }

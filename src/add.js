@@ -1,6 +1,6 @@
 import { utcToZonedTime } from 'date-fns-tz'
 import { format  } from 'date-fns'
-import { myTask, Task, myProject, Project, getSelectedProjectId } from './class'
+import { myTask, Task, myProject, Project, getSelectedProjectId, saveMyTaskToLocalStorage, saveMyProjectToLocalStorage, saveTaskIdtoLocalStorage, saveProjectIdtoLocalStorage } from './class'
 import { removeActive, renderOverviewContent, renderProjectContent, renderProjectList } from './display'
 
 
@@ -63,8 +63,8 @@ export function addTask(){
         let projectDiv = document.querySelector(`div[data-project="${getSelectedProjectId(project)}"]`)
         projectDiv.classList.add('active')
     }
-
-
+    saveMyTaskToLocalStorage()
+    saveTaskIdtoLocalStorage()
 }
 
 export function addProject(){
@@ -75,7 +75,8 @@ export function addProject(){
     renderProjectContent(title)
     myProject.push(project)
     renderProjectList()
-
+    saveProjectIdtoLocalStorage()
+    saveMyProjectToLocalStorage()
 }
 
 export function emptyInputs(){

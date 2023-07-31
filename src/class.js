@@ -1,15 +1,23 @@
 
 export class Task{
 
-    static taskId = 0
+    static taskId = 0;
     
-    static setTaskId(){
+    static addTaskId(){
 
         return ++Task.taskId
     }
 
+    static setTaskId(id){
+        Task.taskId = id
+    }
+
+    static getTaskId(){
+        return Task.taskId
+    }
+
     constructor(title,description,date,project,milestone){
-        this.taskId = Task.setTaskId()
+        this.taskId = Task.addTaskId()
         this.title = title
         this.description = description
         this.date = date
@@ -26,7 +34,7 @@ export class Project{
 
     static projectId = 0;
 
-    static setProjectId(){
+    static addProjectId(){
         return ++Project.projectId
     }
 
@@ -34,14 +42,21 @@ export class Project{
         return Project.projectId
     }
 
+    static setProjectId(id){
+        Project.projectId = id
+    }
+
     constructor(title){
-        this.projectId = Project.setProjectId()
+        this.projectId = Project.addProjectId()
         this.title = title
     }
 }
 
-export let myTask = []
-export let myProject = []
+Task.setTaskId(getTaskIdFromLocalStorage())
+Project.setProjectId(getProjectIdFromLocalStorage())
+console.log(Task.taskId)
+export let myTask = getMyTaskFromLocalStorage()
+export let myProject = getMyProjectFromLocalStorage()
 export let mySortedTask = []
 export let mySortedListedTask = []
 export let myFinishedMilestone = []
@@ -84,4 +99,36 @@ export function emptySortedTask(){
 
 export function emptyTaskListeners(){
     taskListeners = []
+}
+
+export function getMyTaskFromLocalStorage(){
+    return JSON.parse(localStorage.getItem('myTask')) || []
+}
+
+export function saveMyTaskToLocalStorage(){
+    localStorage.setItem('myTask',JSON.stringify(myTask))
+}
+
+export function getMyProjectFromLocalStorage(){
+    return JSON.parse(localStorage.getItem('myProject')) || []
+}
+
+export function saveMyProjectToLocalStorage(){
+    localStorage.setItem('myProject',JSON.stringify(myProject))
+}
+
+export function getTaskIdFromLocalStorage(){
+    return localStorage.getItem('taskId') || 0
+}
+
+export function saveTaskIdtoLocalStorage(){
+    localStorage.setItem('taskId', Task.getTaskId())
+}
+
+export function getProjectIdFromLocalStorage(){
+    return localStorage.getItem('projectId') || 0
+}
+
+export function saveProjectIdtoLocalStorage(){
+    localStorage.setItem('ProjectId', Project.getProjectId())
 }

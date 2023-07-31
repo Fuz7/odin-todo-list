@@ -7,7 +7,8 @@
     --sidebar-button-active: rgba(189,163,245,0.81);
     --placeholder: rgba(0,0,0,0.60);
     --red: #D41212;
-    --gold: #FCCA19
+    --gold: #FCCA19;
+    --info-bottom-border: #767676;
 }
 
 *{
@@ -269,6 +270,7 @@ body{
 .modal .modalAddCard,
 .modal .modalDeleteCard
 .modal .modalEditCard,
+.modal .modalInfoCard,
 .modal .modalAddProjectCard,
 .modal .modalDeleteProjectCard,
 .modal .modalEditProjectCard{
@@ -280,6 +282,7 @@ body{
 .modal.active,
 .modal.activeDeleteTask,
 .modal.activeEditTask,
+.modal.activeInfoTask,
 .modal.activeProject,
 .modal.activeDeleteProject,
 .modal.activeEditProject{
@@ -290,6 +293,7 @@ body{
 .modal.active .modalAddCard,
 .modal.activeDeleteTask .modalDeleteCard,
 .modal.activeEditTask .modalEditCard,
+.modal.activeInfoTask .modalInfoCard,
 .modal.activeProject .modalAddProjectCard,
 .modal.activeDeleteProject .modalDeleteProjectCard,
 .modal.activeEditProject .modalEditProjectCard{
@@ -302,6 +306,7 @@ body{
 .modalAddContainer,
 .modalDeleteContainer,
 .modalEditContainer,
+.modalInfoContainer,
 .modalAddProjectContainer,
 .modalDeleteProjectContainer,
 .modalEditProjectContainer{
@@ -314,6 +319,7 @@ body{
 }
 
 .modal.active .modalAddContainer,
+.modal,.modal.activeInfoTask .modalInfoContainer,
 .modal.activeDeleteTask .modalDeleteContainer{
     z-index: 3;
 }
@@ -321,6 +327,7 @@ body{
 .modalEditContainer,
 .modalDeleteContainer,
 .modalAddProjectContainer,
+.modalInfoContainer,
 .modalDeleteProjectContainer,
 .modalEditProjectContainer{
     visibility: hidden;
@@ -330,6 +337,7 @@ body{
     z-index: 1;
 }
 
+.modal.activeInfoTask .modalInfoContainer,
 .modal.activeEditProject .modalEditContainer,
 .modal.activeDeleteTask .modalDeleteContainer,
 .modal.activeProject .modalAddProjectContainer,
@@ -349,6 +357,14 @@ body{
     border-radius: 8px 8px 0px 0px;
 }
 
+.modalInfoCard{
+    width: 400px;
+    height: 620px;
+    background-color: var(--sidebar);
+    display: grid;
+    grid-template-rows: 70px 468px 84px;
+    border-radius: 8px 8px 0px 0px;
+}
 
 .modalAddProjectCard,
 .modalDeleteCard,
@@ -367,6 +383,7 @@ body{
 .modalHeader,
 .modalDeleteHeader,
 .modalEditHeader,
+.modalInfoHeader,
 .modalProjectHeader,
 .modalDeleteProjectHeader,
 .modalEditProjectHeader{
@@ -381,6 +398,8 @@ body{
     align-items: center;
     color: #FFFFFF;
 }
+
+
 
 .modalDeleteHeader,
 .modalDeleteProjectHeader{
@@ -416,6 +435,55 @@ body{
     font-weight: bold;
 }
 
+.modalInfoBody{
+    grid-row: 2/3;
+    height: 496px;
+    margin: 25px 21px 50px 29px;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleInfo,
+.descInfo,
+.projectInfo,
+.dueDateInfo,
+.dateCompletionInfo{
+    height: 75px;
+    border-bottom: 1px solid var(--info-bottom-border);
+    display: flex;
+}
+
+.descInfo,
+.projectInfo,
+.dueDateInfo,
+.dateCompletionInfo {
+    margin-top: 15px;
+}
+
+.infoSubHeader{
+    width: 45%;
+    font-family: 'Patua';
+    font-size: 18px;
+    color: var(--sidebar-font-color);
+}
+
+.infoData.textarea{
+    overflow-y: auto;
+}
+
+.infoData{
+    width: 55%;
+    font-family: "Roboto";
+    color: rgba(0, 0, 0, 0.908);
+    font-size: 15px;
+    overflow-wrap: break-word;
+    margin-top: 2.5px;
+    
+}
+
+.dateCompletionInfo{
+    border-bottom: 0px;
+}
 
 form{
     grid-row: 2/3;;
@@ -660,6 +728,7 @@ form{
 .modalButtonContainer,
 .modalDeleteButtonContainer,
 .modalButtonEditContainer,
+.modalInfoButtonContainer,
 .modalProjectButtonContainer,
 .modalDeleteProjectButtonContainer{
     grid-row: 3/4;
@@ -673,6 +742,7 @@ form{
 
 .cancelButton,
 .cancelDeleteButton,
+.cancelInfoButton,
 .DeleteButton,
 .cancelEditButton,
 .submitButton,
@@ -722,6 +792,7 @@ form{
 
 .cancelButton:hover,
 .cancelDeleteButton:hover,
+.cancelInfoButton:hover,
 .cancelEditButton:hover,
 .cancelProjectButton:hover,
 .cancelDeleteProjectButton:hover{

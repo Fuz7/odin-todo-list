@@ -1,10 +1,10 @@
-import './static/styles.css'
-import { renderProjectSidebar, renderOverviewContent, renderProjectList } from './display.js'
-import {myTask, Task, myProject, Project} from './class.js'
+import './static/styles.css';
+import {
+  renderProjectSidebar,
+  renderOverviewContent,
+  renderProjectList,
+} from './display';
 
-
-renderProjectSidebar()
-renderOverviewContent('Inbox')
-renderProjectList()
-
-
+renderProjectSidebar();
+renderOverviewContent('Inbox');
+renderProjectList();

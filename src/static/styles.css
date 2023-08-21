@@ -338,7 +338,7 @@ body{
 }
 
 .modal.activeInfoTask .modalInfoContainer,
-.modal.activeEditProject .modalEditContainer,
+.modal.activeEditTask    .modalEditContainer,
 .modal.activeDeleteTask .modalDeleteContainer,
 .modal.activeProject .modalAddProjectContainer,
 .modal.activeDeleteProject .modalDeleteProjectContainer,

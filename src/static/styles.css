@@ -1,282 +1,288 @@
-:root{
-    --background-color: #F0F0F0;
-    --header-color: #E0E0E0;
-    --purple: #5324B9;
-    --sidebar: #F5F5F5;
-    --sidebar-font-color: rgba(0,0,0,0.75);
-    --sidebar-button-active: rgba(189,163,245,0.81);
-    --placeholder: rgba(0,0,0,0.60);
-    --red: #D41212;
-    --gold: #FCCA19;
-    --info-bottom-border: #767676;
+:root {
+  --background-color: #f0f0f0;
+  --header-color: #e0e0e0;
+  --purple: #5324b9;
+  --sidebar: #f5f5f5;
+  --sidebar-font-color: rgba(0, 0, 0, 0.75);
+  --sidebar-button-active: rgba(189, 163, 245, 0.81);
+  --placeholder: rgba(0, 0, 0, 0.6);
+  --red: #d41212;
+  --gold: #fcca19;
+  --info-bottom-border: #767676;
 }
 
-*{
-    box-sizing: border-box;
+button {
+  border: 0px;
+  cursor: pointer;
+  font-size: inherit;
 }
 
-p{
-    margin: 0px;
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0px;
 }
 
 @font-face {
-    font-family: 'Patua';
-    src: url('PatuaOne-Regular.ttf');
+  font-family: 'Patua';
+  src: url('PatuaOne-Regular.ttf');
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('Roboto-Regular.ttf');
+  font-family: 'Roboto';
+  src: url('Roboto-Regular.ttf');
 }
 
-
-body{
-    width: 100%;
-    min-height: 100vh;
-    margin: 0px;
-    display: grid;
-    grid-template-rows: 100px 1fr;
-    grid-template-columns: 290px 1fr;
-    background-color: var(--background-color);
-    position: relative;
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0px;
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 290px 1fr;
+  background-color: var(--background-color);
+  position: relative;
 }
 
-.navbar{
-    grid-row: 1/2;
-    grid-column: 1 / 3;
-    background-color: var(--header-color);
-    display: grid;
-    grid-template-columns: 242px 1fr 242px;
-    grid-template-rows: 1fr;
-    border-bottom: 3px solid var(--purple);
+.navbar {
+  grid-row: 1/2;
+  grid-column: 1 / 3;
+  background-color: var(--header-color);
+  display: grid;
+  grid-template-columns: 242px 1fr 242px;
+  grid-template-rows: 1fr;
+  border-bottom: 3px solid var(--purple);
 }
 
-
-
-.menuBar{
-    grid-column: 1/2;
-    justify-self: center;
-    align-self: center;
-    width: 32px;
-    height: 28px;
-    background-image: url('menuBar_icons.svg');
-    background-size: cover;
-    visibility: hidden;
-    cursor: default;
+.menuBar {
+  grid-column: 1/2;
+  justify-self: center;
+  align-self: center;
+  width: 32px;
+  height: 28px;
+  background-image: url('menuBar_icons.svg');
+  background-size: cover;
+  visibility: hidden;
+  cursor: default;
 }
 
-.title{
-    margin: 0px;
-    justify-self: center;
-    align-self: center;
-    font-family: 'Patua';
-    font-weight: normal;
-    font-size: 48px;
-    letter-spacing: calc(4 * 0.01em);
+.title {
+  margin: 0px;
+  justify-self: center;
+  align-self: center;
+  font-family: 'Patua';
+  font-weight: normal;
+  font-size: 48px;
+  letter-spacing: calc(4 * 0.01em);
 }
 
-.title span{
-    color: #5324B9;
+.title span {
+  color: #5324b9;
 }
 
-.sidebar{
-    grid-area: 2 / 1 /2 / 2;
-    background-color: var(--sidebar);
-    display: flex;
-    padding: 45px 17px;
-    flex-direction: column;
+.sidebar {
+  grid-area: 2 / 1 /2 / 2;
+  background-color: var(--sidebar);
+  display: flex;
+  padding: 45px 17px;
+  flex-direction: column;
 }
 
 .sidebar > .overviewHeader,
-.sidebar > .projectHeader{
-    padding-left: 12px;
-    height: 41px;
-    font-family: 'Roboto';
-    font-size: 32px;
-    border-bottom: 1px solid #262626;
+.sidebar > .projectHeader {
+  padding-left: 12px;
+  height: 41px;
+  font-family: 'Roboto';
+  font-size: 32px;
+  border-bottom: 1px solid #262626;
 }
 
-.overviewList{
-    height: fit-content;
-    margin: 28px 0px;
-    display: grid;
-    grid-template-rows: repeat(4,40px);
-    gap: 6px 0px;
-    user-select: none;
+.overviewList {
+  height: fit-content;
+  margin: 28px 0px;
+  display: grid;
+  grid-template-rows: repeat(4, 40px);
+  gap: 6px 0px;
+  user-select: none;
 }
 
-.overviewList > div{
-    padding-left: 65px;
-    font-size: 20px;
-    font-family: 'Roboto';
-    background-color: var(--sidebar);
-    display: flex;
-    color: var(--sidebar-font-color);
-    align-items: center;
-    position: relative;;
-    cursor: pointer;
+.overviewList > button {
+  border: 0px;
+
+  padding-left: 65px;
+  font-size: 20px;
+  font-family: 'Roboto';
+  background-color: var(--sidebar);
+  display: flex;
+  color: var(--sidebar-font-color);
+  align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 
-.overviewList > div:hover,
-.projectList > div:hover{
-    background-color: var(--header-color);
+.overviewList > button:hover,
+.projectList > button:hover {
+  background-color: var(--header-color);
 }
 
-
-.overviewList > div:first-of-type > span:first-of-type{
-    background-image: url('inbox_sidebar.svg');
-    width: 27px;
-    height: 27px;
-    position: absolute;
-    left: 27px;
+.overviewList > button:first-of-type > span:first-of-type {
+  background-image: url('inbox_sidebar.svg');
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  left: 27px;
 }
 
-.overviewList > div:nth-of-type(2) > span:first-of-type{
-    background-image: url('today_logo.svg');
-    width: 27px;
-    height: 27px;
-    position: absolute;
-    left: 27px;
+.overviewList > button:nth-of-type(2) > span:first-of-type {
+  background-image: url('today_logo.svg');
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  left: 27px;
 }
 
-.overviewList > div:nth-of-type(3) > span:first-of-type{
-    background-image: url('week_icon.svg');
-    width: 26px;
-    height: 26px;
-    position: absolute;
-    left: 27px;
+.overviewList > button:nth-of-type(3) > span:first-of-type {
+  background-image: url('week_icon.svg');
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  left: 27px;
 }
 
-.overviewList > div:nth-of-type(4) > span:first-of-type{
-    background-image: url('milestone_icon.svg');
-    width: 22px;
-    height: 26px;
-    position: absolute;
-    left: 29px;
+.overviewList > button:nth-of-type(4) > span:first-of-type {
+  background-image: url('milestone_icon.svg');
+  width: 22px;
+  height: 26px;
+  position: absolute;
+  left: 29px;
 }
 
-.projectHeader{
-    position: relative;
-    margin-bottom: 28px;
+.projectHeader {
+  position: relative;
+  margin-bottom: 28px;
 }
 
-.projectHeader > span{
-    position: absolute;
-    bottom: 5px;
-    background-image: url('add_project.svg');
-    background-size: cover;
-    right: 4px;
-    width: 27px;
-    height: 27px;
-    cursor: pointer;
+.projectHeader > button {
+  border: 0px;
+  position: absolute;
+  bottom: 5px;
+  background-image: url('add_project.svg');
+  background-size: cover;
+  right: 4px;
+  width: 27px;
+  height: 27px;
+  cursor: pointer;
 }
 
-.projectList{
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto';
-    font-size: 20px;
-    color: var(--sidebar-font-color);
-    gap: 6px;
-    user-select: none;
+.projectList {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto';
+  font-size: 20px;
+  color: var(--sidebar-font-color);
+  gap: 6px;
+  user-select: none;
 }
 
-.projectList > div{
-    display: flex;
-    align-items: center;
-    height: 40px;
-    cursor: pointer;
-    padding-left: 27px;
-    position: relative;
+.projectList > button {
+  border: 0px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  cursor: pointer;
+  padding-left: 27px;
+  position: relative;
+  padding-right: 55px;
+  overflow: hidden;
 }
 
-.projectList > div > span:first-of-type{
-    position: absolute;
-    background-image: url('edit_icon.svg');
-    width: 24px;
-    height: 21px;
-    right: 33px;
-    bottom: 12px;
+.projectList > button > button:first-of-type {
+  position: absolute;
+  background-image: url('edit_icon.svg');
+  width: 24px;
+  height: 21px;
+  right: 33px;
+  bottom: 12px;
+  background-color: transparent;
 }
 
-.projectList > div > span:nth-of-type(2){
-    position: absolute;
-    background-image: url('deleteprj_icon.svg');
-    width: 20px;
-    height: 20px;
-    right: 8px;
-    bottom: 12px;
+.projectList > button > button:nth-of-type(2) {
+  position: absolute;
+  background-image: url('deleteprj_icon.svg');
+  width: 20px;
+  height: 20px;
+  right: 8px;
+  bottom: 12px;
+  background-color: transparent;
 }
 
-.projectList > div.active,
-.overviewList > div.active{
-    background-color: var(--sidebar-button-active);
-    color: black;
+.projectList > button.active,
+.overviewList > button.active {
+  background-color: var(--sidebar-button-active);
+  color: black;
 }
 
-
-.projectList > div > span:nth-of-type(1),
-.projectList > div > span:nth-of-type(2){
-    transition: transform 0.2s;
+.projectList > button > button:nth-of-type(1),
+.projectList > button > button:nth-of-type(2) {
+  transition: transform 0.2s;
 }
-.projectList > div > span:nth-of-type(1):hover,
-.projectList > div > span:nth-of-type(2):hover{
-    transform: scale(1.3);
-}
-
-.projectList > div.active > span:nth-of-type(3),
-.overviewList > div.active > span:nth-of-type(2){
-    position: absolute;
-    left: 0px;
-    height: 100%;
-    width: 4px;
-    background-color: var(--purple);
+.projectList > button > button:nth-of-type(1):hover,
+.projectList > button > button:nth-of-type(2):hover {
+  transform: scale(1.3);
 }
 
-.projectList > div.active > span:nth-of-type(1){
-    background-image: url('purpedit_icon.svg');
+.projectList > button.active > span:nth-of-type(3),
+.overviewList > button.active > span:nth-of-type(2) {
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  width: 4px;
+  background-color: var(--purple);
 }
 
-.projectList > div.active > span:nth-of-type(2){
-    background-image: url('reddeleteprj_icon.svg');
+.projectList > button.active > button:nth-of-type(1) {
+  background-image: url('purpedit_icon.svg');
 }
 
-
-
-.addButton{
-    background-image: url(bigadd_icon.svg);
-    background-position: cover;
-    position: fixed;
-    width: 68px;
-    height: 68px;
-    bottom: 53px;
-    right: 105px;
-    cursor: pointer;
+.projectList > button.active > button:nth-of-type(2) {
+  background-image: url('reddeleteprj_icon.svg');
 }
 
-.modal{
-    grid-row: 1 / 3;
-    grid-column: 1 / 3;
-    height: 100%;
-    width: 100%;
-    display: block;
-    visibility: hidden;
-    z-index: -1;
-    position: fixed;
-    background-color: rgba(0,0,0,0.25);
+.addButton {
+  background-image: url(bigadd_icon.svg);
+  background-position: cover;
+  position: fixed;
+  width: 68px;
+  height: 68px;
+  bottom: 53px;
+  right: 105px;
+  cursor: pointer;
+  border: 0px;
 }
 
+.modal {
+  grid-row: 1 / 3;
+  grid-column: 1 / 3;
+  height: 100%;
+  width: 100%;
+  display: block;
+  visibility: hidden;
+  z-index: -1;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.25);
+}
 
 .modal .modalAddCard,
-.modal .modalDeleteCard
-.modal .modalEditCard,
+.modal .modalDeleteCard .modal .modalEditCard,
 .modal .modalInfoCard,
 .modal .modalAddProjectCard,
 .modal .modalDeleteProjectCard,
-.modal .modalEditProjectCard{
-    visibility: hidden;
-    transform: scale(0.5);
-    transition: transform 400ms cubic-bezier(0.18,0.89,0.43,1.19);
+.modal .modalEditProjectCard {
+  visibility: hidden;
+  transform: scale(0.5);
+  transition: transform 400ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
 }
 
 .modal.active,
@@ -285,9 +291,9 @@ body{
 .modal.activeInfoTask,
 .modal.activeProject,
 .modal.activeDeleteProject,
-.modal.activeEditProject{
-    visibility: visible;
-    z-index: 3;
+.modal.activeEditProject {
+  visibility: visible;
+  z-index: 3;
 }
 
 .modal.active .modalAddCard,
@@ -296,12 +302,10 @@ body{
 .modal.activeInfoTask .modalInfoCard,
 .modal.activeProject .modalAddProjectCard,
 .modal.activeDeleteProject .modalDeleteProjectCard,
-.modal.activeEditProject .modalEditProjectCard{
-    visibility: visible;
-    transform: scale(1);
+.modal.activeEditProject .modalEditProjectCard {
+  visibility: visible;
+  transform: scale(1);
 }
-
-
 
 .modalAddContainer,
 .modalDeleteContainer,
@@ -309,19 +313,20 @@ body{
 .modalInfoContainer,
 .modalAddProjectContainer,
 .modalDeleteProjectContainer,
-.modalEditProjectContainer{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.15);
+.modalEditProjectContainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .modal.active .modalAddContainer,
-.modal,.modal.activeInfoTask .modalInfoContainer,
-.modal.activeDeleteTask .modalDeleteContainer{
-    z-index: 3;
+.modal,
+.modal.activeInfoTask .modalInfoContainer,
+.modal.activeDeleteTask .modalDeleteContainer {
+  z-index: 3;
 }
 
 .modalEditContainer,
@@ -329,56 +334,54 @@ body{
 .modalAddProjectContainer,
 .modalInfoContainer,
 .modalDeleteProjectContainer,
-.modalEditProjectContainer{
-    visibility: hidden;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
+.modalEditProjectContainer {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
 }
 
 .modal.activeInfoTask .modalInfoContainer,
-.modal.activeEditTask    .modalEditContainer,
+.modal.activeEditTask .modalEditContainer,
 .modal.activeDeleteTask .modalDeleteContainer,
 .modal.activeProject .modalAddProjectContainer,
 .modal.activeDeleteProject .modalDeleteProjectContainer,
-.modal.activeEditProject .modalEditProjectContainer{
-    visibility: visible;
-    z-index: 3;
+.modal.activeEditProject .modalEditProjectContainer {
+  visibility: visible;
+  z-index: 3;
 }
 
 .modalAddCard,
-.modalEditCard{
-    width: 400px;
-    height: 650px;
-    background-color: var(--sidebar); 
-    display: grid;
-    grid-template-rows: 70px 496px 84px;
-    border-radius: 8px 8px 0px 0px;
+.modalEditCard {
+  width: 400px;
+  height: 650px;
+  background-color: var(--sidebar);
+  display: grid;
+  grid-template-rows: 70px 496px 84px;
+  border-radius: 8px 8px 0px 0px;
 }
 
-.modalInfoCard{
-    width: 400px;
-    height: 620px;
-    background-color: var(--sidebar);
-    display: grid;
-    grid-template-rows: 70px 468px 84px;
-    border-radius: 8px 8px 0px 0px;
+.modalInfoCard {
+  width: 400px;
+  height: 620px;
+  background-color: var(--sidebar);
+  display: grid;
+  grid-template-rows: 70px 468px 84px;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .modalAddProjectCard,
 .modalDeleteCard,
 .modalDeleteProjectCard,
-.modalEditProjectCard{
-    width: 400px;
-    height: 282px;
-    background-color: var(--sidebar);
-    display: grid;
-    grid-template-rows: 70px 128px 84px;
-    border-radius: 8px 8px 0px 0px;
+.modalEditProjectCard {
+  width: 400px;
+  height: 282px;
+  background-color: var(--sidebar);
+  display: grid;
+  grid-template-rows: 70px 128px 84px;
+  border-radius: 8px 8px 0px 0px;
 }
-
-
 
 .modalHeader,
 .modalDeleteHeader,
@@ -386,176 +389,169 @@ body{
 .modalInfoHeader,
 .modalProjectHeader,
 .modalDeleteProjectHeader,
-.modalEditProjectHeader{
-    grid-row: 1/2;
-    grid-column: 1/2;
-    background-color: var(--purple);
-    border-radius: 8px 8px 0px 0px;
-    display: flex;
-    justify-content: center;
-    font-size: 32px;
-    font-family: "Patua";
-    align-items: center;
-    color: #FFFFFF;
+.modalEditProjectHeader {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  background-color: var(--purple);
+  border-radius: 8px 8px 0px 0px;
+  display: flex;
+  justify-content: center;
+  font-size: 32px;
+  font-family: 'Patua';
+  align-items: center;
+  color: #ffffff;
 }
 
-
-
 .modalDeleteHeader,
-.modalDeleteProjectHeader{
-    background-color: var(--red);
+.modalDeleteProjectHeader {
+  background-color: var(--red);
 }
 
 .modalBody,
 .modalEditBody,
 .modalProjectBody,
-.modalEditProjectBody{
-    padding: 0px 35px;
+.modalEditProjectBody {
+  padding: 0px 35px;
 }
 
 .modalDeleteProjectBody,
-.modalDeleteBody{
-    padding: 35px 20px 0px 30px;
+.modalDeleteBody {
+  padding: 35px 20px 0px 30px;
 }
 
 .modalDeleteProjectBody > p:first-of-type,
-.modalDeleteBody >  p:first-of-type{
-    font-family: 'Patua';
-    font-size: 20px;
-    margin-bottom: 15px;
+.modalDeleteBody > p:first-of-type {
+  font-family: 'Patua';
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
 .modalDeleteProjectBody > p:nth-of-type(2),
-.modalDeleteBody > p:nth-of-type(2){
-    font-family: 'Roboto';
+.modalDeleteBody > p:nth-of-type(2) {
+  font-family: 'Roboto';
 }
 
 .modalDeleteProjectBody > p:nth-of-type(2) > span,
-.modalDeleteBody > p:nth-of-type(2) > span{
-    font-weight: bold;
+.modalDeleteBody > p:nth-of-type(2) > span {
+  font-weight: bold;
 }
 
-.modalInfoBody{
-    grid-row: 2/3;
-    height: 496px;
-    margin: 25px 21px 50px 29px;
-    display: flex;
-    flex-direction: column;
+.modalInfoBody {
+  grid-row: 2/3;
+  height: 496px;
+  margin: 25px 21px 50px 29px;
+  display: flex;
+  flex-direction: column;
 }
 
 .titleInfo,
 .descInfo,
 .projectInfo,
 .dueDateInfo,
-.dateCompletionInfo{
-    height: 75px;
-    border-bottom: 1px solid var(--info-bottom-border);
-    display: flex;
+.dateCompletionInfo {
+  height: 75px;
+  border-bottom: 1px solid var(--info-bottom-border);
+  display: flex;
 }
 
 .descInfo,
 .projectInfo,
 .dueDateInfo,
 .dateCompletionInfo {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
-.infoSubHeader{
-    width: 45%;
-    font-family: 'Patua';
-    font-size: 18px;
-    color: var(--sidebar-font-color);
+.infoSubHeader {
+  width: 45%;
+  font-family: 'Patua';
+  font-size: 18px;
+  color: var(--sidebar-font-color);
 }
 
-.infoData.textarea{
-    overflow-y: auto;
+.infoData.textarea {
+  overflow-y: auto;
 }
 
-.infoData{
-    width: 55%;
-    font-family: "Roboto";
-    color: rgba(0, 0, 0, 0.908);
-    font-size: 15px;
-    overflow-wrap: break-word;
-    margin-top: 2.5px;
-    
+.infoData {
+  width: 55%;
+  font-family: 'Roboto';
+  color: rgba(0, 0, 0, 0.908);
+  font-size: 15px;
+  overflow-wrap: break-word;
+  margin-top: 2.5px;
 }
 
-.dateCompletionInfo{
-    border-bottom: 0px;
+.dateCompletionInfo {
+  border-bottom: 0px;
 }
 
-form{
-    grid-row: 2/3;;
+form {
+  grid-row: 2/3;
 }
 
 .titleAddContainer,
 .titleEditContainer,
 .descriptionAddContainer,
-.descriptionEditContainer{
-    margin-top: 58px;
-    position: relative;
+.descriptionEditContainer {
+  margin-top: 58px;
+  position: relative;
 }
 
 .titleAddProjectContainer,
-.titleEditProjectContainer{
-    margin-top: 49px;
-    position: relative;
+.titleEditProjectContainer {
+  margin-top: 49px;
+  position: relative;
 }
 
 .dateAddContainer,
 .dateEditContainer,
 .projectAddContainer,
-.projectEditContainer{
-    margin-top: 57px;
-    position: relative;
+.projectEditContainer {
+  margin-top: 57px;
+  position: relative;
 }
-
-
 
 .milestoneAddContainer,
-.milestoneEditContainer{
-    margin-top: 27px;
-    position: relative;
-    cursor: pointer;
+.milestoneEditContainer {
+  margin-top: 27px;
+  position: relative;
+  cursor: pointer;
 }
 
-
-.modalBody > div > input:not([type=checkbox]),
+.modalBody > div > input:not([type='checkbox']),
 .modalBody > div > select,
-.modalEditBody > div > input:not([type=checkbox]),
+.modalEditBody > div > input:not([type='checkbox']),
 .modalEditBody > div > select,
 .milestoneAddContainer > label,
 .milestoneEditContainer > label,
 .titleAddProjectContainer > input,
-.titleEditProjectContainer > input{
-    width: 330px;
-    height: 33px;
-    background-color: var(--background-color);
-    border: 0px;
-    border-bottom: black 1px solid;
-    border-radius: 2px;
+.titleEditProjectContainer > input {
+  width: 330px;
+  height: 33px;
+  background-color: var(--background-color);
+  border: 0px;
+  border-bottom: black 1px solid;
+  border-radius: 2px;
 }
 
 .milestoneAddContainer > label,
-.milestoneEditContainer > label{
-    background-color: var(--sidebar-font-color);
-    border: 0px;
-    display: block;
-    cursor: pointer;
+.milestoneEditContainer > label {
+  background-color: var(--sidebar-font-color);
+  border: 0px;
+  display: block;
+  cursor: pointer;
 }
 
 .milestoneAddContainer > input,
-.milestoneEditContainer > input{
-    cursor: pointer;
+.milestoneEditContainer > input {
+  cursor: pointer;
 }
-
 
 .titleAddContainer > label > span,
 .titleEditContainer > label > span,
 .titleAddProjectContainer > label > span,
-.titleEditProjectContainer > label > span{
-    color: var(--red);
+.titleEditProjectContainer > label > span {
+  color: var(--red);
 }
 
 .titleAddContainer > input:focus ~ label > span,
@@ -565,8 +561,8 @@ form{
 .titleAddProjectContainer > input:focus ~ label > span,
 .titleAddProjectContainer > input:not(:placeholder-shown) ~ label > span,
 .titleEditProjectContainer > input:focus ~ label > span,
-.titleEditProjectContainer > input:not(:placeholder-shown) ~ label > span{
-    display: none;
+.titleEditProjectContainer > input:not(:placeholder-shown) ~ label > span {
+  display: none;
 }
 
 .titleAdd ~ span,
@@ -574,15 +570,15 @@ form{
 .dateAdd ~ span,
 .dateEdit ~ span,
 .projectTitleAdd ~ span,
-.projectEditTitle ~ span{
-    visibility: hidden;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    font-family: 'Robota';
-    color: red;
-    font-size: 14px;
-    transition: bottom 0.1s ease;
+.projectEditTitle ~ span {
+  visibility: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  font-family: 'Robota';
+  color: red;
+  font-size: 14px;
+  transition: bottom 0.1s ease;
 }
 
 .titleAdd.invalid ~ span,
@@ -590,22 +586,20 @@ form{
 .dateAdd.invalid ~ span,
 .dateEdit.invalid ~ span,
 .projectTitleAdd.invalid ~ span,
-.projectEditTitle.invalid ~ span{
-    visibility: visible;
-    bottom: -20px;
+.projectEditTitle.invalid ~ span {
+  visibility: visible;
+  bottom: -20px;
 }
-
 
 .descriptionAddContainer > textarea,
-.descriptionEditContainer > textarea{
-    width: 330px;
-    height: 78px;
-    background-color: var(--background-color);
-    border: 0px;
-    border-bottom: black 1px solid;
-    border-radius: 2px;
+.descriptionEditContainer > textarea {
+  width: 330px;
+  height: 78px;
+  background-color: var(--background-color);
+  border: 0px;
+  border-bottom: black 1px solid;
+  border-radius: 2px;
 }
-
 
 .titleAddContainer input:focus-visible,
 .titleEditContainer input:focus-visible,
@@ -616,18 +610,18 @@ form{
 .projectAddContainer > select:focus-visible,
 .projectEditContainer > select:focus-visible,
 .titleAddProjectContainer > input:focus-visible,
-.titleEditProjectContainer > input:focus-visible{
-    outline: solid 2px black;
-    border-radius: 2px;
-    border-bottom: 0px;
+.titleEditProjectContainer > input:focus-visible {
+  outline: solid 2px black;
+  border-radius: 2px;
+  border-bottom: 0px;
 }
 
 .projectAddContainer > select,
-.projectEditContainer > select{
-    font-size: 20px;
-    font-family: 'Patua';
-    color: var(--sidebar-font-color);
-    padding-left: 7px;
+.projectEditContainer > select {
+  font-size: 20px;
+  font-family: 'Patua';
+  color: var(--sidebar-font-color);
+  padding-left: 7px;
 }
 
 .titleAddContainer label,
@@ -641,48 +635,53 @@ form{
 .milestoneAddContainer label > span,
 .milestoneEditContainer label > span,
 .titleAddProjectContainer label,
-.titleEditProjectContainer label{
-    position: absolute;
-    left: 12px;
-    top: 5px;
-    color: var(--placeholder);
-    font-family: 'Patua';
-    font-size: 20px;
-    user-select: none;
-    transition: background-color 0.3s ease, color 0.3s ease, left 0.3s ease, top 0.3s ease, border-radius 0.3s ease
+.titleEditProjectContainer label {
+  position: absolute;
+  left: 12px;
+  top: 5px;
+  color: var(--placeholder);
+  font-family: 'Patua';
+  font-size: 20px;
+  user-select: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    left 0.3s ease,
+    top 0.3s ease,
+    border-radius 0.3s ease;
 }
 
 .milestoneAddContainer label > span,
-.milestoneEditContainer label > span{
-    color: var(--background-color);
-    user-select: none;
+.milestoneEditContainer label > span {
+  color: var(--background-color);
+  user-select: none;
 }
 
 .milestoneAddContainer input,
-.milestoneEditContainer input{
-    position: absolute;
-    right: 10px; 
-    top: 5px;
-    width: 22px;
-    height: 22px;
-    margin: 0px;
+.milestoneEditContainer input {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  width: 22px;
+  height: 22px;
+  margin: 0px;
 }
 
 .milestoneAddContainer input:checked,
-.milestoneEditContainer input:checked{
-    accent-color: var(--gold);
+.milestoneEditContainer input:checked {
+  accent-color: var(--gold);
 }
 
 .milestoneAddContainer input:checked ~ label,
-.milestoneEditContainer input:checked ~ label{
-    background-color: var(--purple);
+.milestoneEditContainer input:checked ~ label {
+  background-color: var(--purple);
 }
 
 .dateAddContainer label,
 .dateEditContainer label,
 .projectAddContainer label,
-.projectEditContainer label{
-    visibility: hidden;
+.projectEditContainer label {
+  visibility: hidden;
 }
 
 .titleAddContainer input:focus ~ label,
@@ -704,14 +703,14 @@ form{
 .titleAddProjectContainer input:focus ~ label,
 .titleAddProjectContainer input:not(:placeholder-shown) ~ label,
 .titleEditProjectContainer select:focus ~ label,
-.titleEditProjectContainer input:not(:placeholder-shown) ~ label{
-    visibility: visible;
-    left: 0px;
-    top: -31px;
-    color: #FFFFFF;
-    border-radius: 2px;
-    padding: 2px 7px;
-    background-color: var(--sidebar-font-color);
+.titleEditProjectContainer input:not(:placeholder-shown) ~ label {
+  visibility: visible;
+  left: 0px;
+  top: -31px;
+  color: #ffffff;
+  border-radius: 2px;
+  padding: 2px 7px;
+  background-color: var(--sidebar-font-color);
 }
 
 .projectTitleAdd,
@@ -720,24 +719,23 @@ form{
 .descAdd,
 .dateAdd,
 .dateEdit,
-.projectEditTitle{
-    font-size: 20px;
+.projectEditTitle {
+  font-size: 20px;
 }
-
 
 .modalButtonContainer,
 .modalDeleteButtonContainer,
 .modalButtonEditContainer,
 .modalInfoButtonContainer,
 .modalProjectButtonContainer,
-.modalDeleteProjectButtonContainer{
-    grid-row: 3/4;
-    background-color: rgba(0,0,0,0.05);
-    border-top: black solid 1px;
-    display: flex;
-    justify-content: flex-end;
-    padding: 22px 25px;
-    gap: 6px;
+.modalDeleteProjectButtonContainer {
+  grid-row: 3/4;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-top: black solid 1px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 22px 25px;
+  gap: 6px;
 }
 
 .cancelButton,
@@ -751,43 +749,43 @@ form{
 .editProjectButton,
 .cancelProjectButton,
 .cancelDeleteProjectButton,
-.DeleteProjectButton{
-    font-family: 'Roboto';
-    font-size: 20px;
-    color: black;
-    padding: 6.2px 11px;
-    cursor: pointer;
-    border: 0px;
-    border: 1px solid black;
-    border-radius: 2px;
-    user-select: none;
+.DeleteProjectButton {
+  font-family: 'Roboto';
+  font-size: 20px;
+  color: black;
+  padding: 6.2px 11px;
+  cursor: pointer;
+  border: 0px;
+  border: 1px solid black;
+  border-radius: 2px;
+  user-select: none;
 }
 
 .submitButton,
 .editButton,
 .submitProjectButton,
-.editProjectButton{
-    background-color: var(--purple);
-    border: 1px solid black;
-    color: var(--background-color);
+.editProjectButton {
+  background-color: var(--purple);
+  border: 1px solid black;
+  color: var(--background-color);
 }
 
 .submitButton:hover,
 .editButton:hover,
 .submitProjectButton:hover,
-.editProjectButton:hover{
-    background-color: #480bca;
+.editProjectButton:hover {
+  background-color: #480bca;
 }
 
 .DeleteProjectButton,
-.DeleteButton{
-    background-color: var(--red);
-    color: white;
+.DeleteButton {
+  background-color: var(--red);
+  color: white;
 }
 
 .DeleteProjectButton:hover,
-.DeleteButton:hover{
-    background-color: #b90d0d;
+.DeleteButton:hover {
+  background-color: #b90d0d;
 }
 
 .cancelButton:hover,
@@ -795,426 +793,427 @@ form{
 .cancelInfoButton:hover,
 .cancelEditButton:hover,
 .cancelProjectButton:hover,
-.cancelDeleteProjectButton:hover{
-    background-color: #e3e3e3;
+.cancelDeleteProjectButton:hover {
+  background-color: #e3e3e3;
 }
 
 #EditProjectButton,
-.editButton{
-    padding: 6.2px 20px;
+.editButton {
+  padding: 6.2px 20px;
 }
 
-.content{
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
-    padding: 67px 105px 0px 131px;
+.content {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  padding: 67px 105px 0px 131px;
 }
 
-.InboxContainer{
-    height: 90px;
-    background-color: var(--purple);
-    border-radius: 2px;
-    padding: 0px 47px 0px 43px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.InboxContainer {
+  height: 90px;
+  max-width: 1309px;
+  background-color: var(--purple);
+  border-radius: 2px;
+  padding: 0px 47px 0px 43px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .inboxHeader,
-.milestoneHeader{
-    font-size: 48px;
-    font-family: "Patua";
-    top: 14px;
-    color: white;
+.milestoneHeader {
+  font-size: 48px;
+  font-family: 'Patua';
+  top: 14px;
+  color: white;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.milestoneHeader{
-    color: var(--gold);
+.milestoneHeader {
+  color: var(--gold);
 }
 
-
-.dropdown{
-    width: 145px;
-    height: 34px;
-    background-color: var(--sidebar);
-    padding: 6px 31px 5px 11px;
-    text-overflow: ellipsis;
-    font-family: "Roboto";
-    font-size: 20px;
-    position: relative;
-    cursor: pointer;
-    border-radius: 2px 2px 0px 0px;
-    user-select: none;
-
+.dropdown {
+  border: 0px;
+  text-align: left;
+  min-width: 145px;
+  max-width: 145px;
+  height: 34px;
+  background-color: var(--sidebar);
+  padding: 6px 31px 5px 11px;
+  text-overflow: ellipsis;
+  font-family: 'Roboto';
+  font-size: 20px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 2px 2px 0px 0px;
+  user-select: none;
 }
 .dropdown > div,
-.dropdown .sortOptions{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.dropdown .sortOptions {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 20px;
 }
 
-
-.dropdown:hover{
-    background-color: #ececec;
+.dropdown:hover {
+  background-color: #ececec;
 }
 
-.dropdown::before{
-    content: '';
-    position: absolute;
-    top: 18px;
-    right: 20px;
-    width: 12px;
-    height: 2px;
-    z-index: 2;
-    background: black;
-    transform: rotate(40deg);
-    transition: transform 0.2s;
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 12px;
+  height: 2px;
+  z-index: 2;
+  background: black;
+  transform: rotate(40deg);
+  transition: transform 0.2s;
 }
 
-.dropdown::after{
-    content: '';
-    position: absolute;
-    top: 18px;
-    right: 12px;
-    width: 12px;
-    height: 2px;
-    z-index: 2;
-    background: black;
-    transform: rotate(-40deg);
-    transition: transform 0.2s;
+.dropdown::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 12px;
+  width: 12px;
+  height: 2px;
+  z-index: 2;
+  background: black;
+  transform: rotate(-40deg);
+  transition: transform 0.2s;
 }
 
-.dropdown.active::before{
-    transform: rotate(-40deg);
-
+.dropdown.active::before {
+  transform: rotate(-40deg);
 }
 
-.dropdown.active::after{
-    transform: rotate(40deg);
-
+.dropdown.active::after {
+  transform: rotate(40deg);
 }
 
 .contentBody {
-    margin-top: 32px;
-    width: 100%;
-    user-select: none;
+  margin-top: 32px;
+  width: 100%;
+  user-select: none;
 }
 
-
-
 .taskData,
-.milestoneData{
-    background-color: var(--sidebar);
-    height: 41px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 2px;
-    border: inset 1px var(--sidebar-font-color);
-    padding: 0px 16px 0px 12px;
-    flex-grow: 0;
-    max-width: 1383px;
-    margin-bottom: 3px;
+.milestoneData {
+  background-color: var(--sidebar);
+  height: 41px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 2px;
+  border: inset 1px var(--sidebar-font-color);
+  padding: 0px 16px 0px 12px;
+  flex-grow: 0;
+  max-width: 1383px;
+  margin-bottom: 3px;
 }
 
 .taskData{
-    cursor:pointer;
+  cursor: pointer;
 }
 
-.taskData:hover{
-    background-color: var(--header-color);
+.taskData:hover {
+  background-color: var(--header-color);
 }
 
-.taskData.checked > .leftSideData > .task-text{
-    text-decoration: line-through;
+.taskData.checked > .leftSideData > .task-text {
+  text-decoration: line-through;
 }
 
-
-.milestoneData{
-    padding-left: 40px;
-    position: relative;
+.milestoneData {
+  padding-left: 40px;
+  position: relative;
 }
 
-.leftSideData > .checkboxContainer input{
-    width: 18px;
-    height: 18px;
-    visibility: hidden;
+.leftSideData > .checkboxContainer input {
+  width: 18px;
+  height: 18px;
+  visibility: hidden;
 }
 
-.checkboxContainer{
-    position: relative;
+.checkboxContainer {
+  position: relative;
 }
 
-.checkboxContainer > label{
-    background-color: var(--background-color);
-    border: 3px solid var(--purple);
-    border-radius: 50%;
-    cursor: pointer;
-    height: 24px;
-    width: 24px;
-    position: absolute;
-    top: 1px;
-    left: 1px;
+.checkboxContainer > label {
+  background-color: var(--background-color);
+  border: 3px solid var(--purple);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 1px;
+  left: 1px;
 }
 
-.checkboxContainer > label::after{
-    border: 2px solid var(--background-color);
-    border-top: none;
-    border-right: none;
-    content: "";
-    top: 4px;
-    left: 3px;
-    position: absolute;
-    opacity: 0;
-    transform: rotate(-45deg);
-    width: 10px;
-    height: 5px;
-    z-index: 2;
+.checkboxContainer > label::after {
+  border: 2px solid var(--background-color);
+  border-top: none;
+  border-right: none;
+  content: '';
+  top: 4px;
+  left: 3px;
+  position: absolute;
+  opacity: 0;
+  transform: rotate(-45deg);
+  width: 10px;
+  height: 5px;
+  z-index: 2;
 }
 
-.checkboxContainer.noDue > label{
-    border-color: black;
+.checkboxContainer.noDue > label {
+  border-color: black;
 }
 
-.checkboxContainer.alreadyDue > label{
-    border-color: var(--red);
+.checkboxContainer.alreadyDue > label {
+  border-color: var(--red);
 }
 
-.checkboxContainer.noDue input:checked + label{
-    background-color: black;
+.checkboxContainer.noDue input:checked + label {
+  background-color: black;
 }
-.checkboxContainer.alreadyDue input:checked + label{
-    background-color: var(--red);
-}
-
-.checkboxContainer input:checked + label{
-    background-color: var(--purple);
+.checkboxContainer.alreadyDue input:checked + label {
+  background-color: var(--red);
 }
 
-
-
-.checkboxContainer input:checked + label::after{
-    opacity: 1;
+.checkboxContainer input:checked + label {
+  background-color: var(--purple);
 }
 
-.checkboxContainer input{
-    z-index: -1;
+.checkboxContainer input:checked + label::after {
+  opacity: 1;
+}
+
+.checkboxContainer input {
+  z-index: -1;
 }
 
 .leftSideData,
-.leftSideMilestoneData{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 16px;
-    font-family: "Roboto";
-    flex-grow: 0;
+.leftSideMilestoneData {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-family: 'Roboto';
+  flex-grow: 0;
 }
 
 .leftSideData p,
-.leftSideMilestoneData .task-text{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 800px;
+.leftSideMilestoneData .task-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 800px;
 }
 
-.leftSideMilestoneData > span{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    height: 40px;
-    width: 15px;
-    background-color: #480bca;
+.leftSideMilestoneData > span {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 40px;
+  width: 15px;
+  background-color: #480bca;
 }
 
-.leftSideMilestoneData.alreadyDue > span{
-    background-color: var(--red);
+.leftSideMilestoneData.alreadyDue > span {
+  background-color: var(--red);
 }
 
-.leftSideMilestoneData.noDue > span{
-    background-color: black;
+.leftSideMilestoneData.noDue > span {
+  background-color: black;
 }
 
 .rightSideData,
-.rightSideMilestoneData{
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
+.rightSideMilestoneData {
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
 }
 
-.rightSideMilestoneData{
-    gap: 13px;
+.rightSideMilestoneData {
+  gap: 13px;
 }
 
-.dueDate{
-    font-size: 20px;
-    font-family: 'Roboto';
-    width: 97px;
-    margin-right: 35px;
+.dueDate {
+  font-size: 20px;
+  font-family: 'Roboto';
+  width: 97px;
+  margin-right: 35px;
 }
 
-
-.dueDate span:nth-of-type(2){
-    width: 2px;
-    height: 40px;
-    background-color: var(--purple);
-    position: absolute;
-    top: 0px;
-    left: -12px;
+.dueDate span:nth-of-type(2) {
+  width: 2px;
+  height: 40px;
+  background-color: var(--purple);
+  position: absolute;
+  top: 0px;
+  left: -12px;
 }
 
-.dueDate span:nth-of-type(2){
-    left: 115px;
+.dueDate span:nth-of-type(2) {
+  left: 115px;
 }
 
 .doneDate,
-.rightSideMilestoneData > .dueDate{
-    width: auto;
-    font-size: 20px;
-    margin: 0px;
-    font-family: 'Roboto';
+.rightSideMilestoneData > .dueDate {
+  width: auto;
+  font-size: 20px;
+  margin: 0px;
+  font-family: 'Roboto';
 }
-.dash{
-    height: 2px;
-    width: 20px;
-    background-color: var(--purple);
-    
-}
-
-.separator{
-    height: 40px;
-    width: 2px;
-    background-color: var(--purple);
-    position: absolute;
-    right: 34px;
+.dash {
+  height: 2px;
+  width: 20px;
+  background-color: var(--purple);
 }
 
-.rightSideData > span{
-    width: 2px;
-    height: 40px;
-    position: absolute;
-    background-color: var(--purple);
-    left: -17px;
+.separator {
+  height: 40px;
+  width: 2px;
+  background-color: var(--purple);
+  position: absolute;
+  right: 34px;
 }
 
-.rightSideMilestoneData > .infoTask{
-    margin-left: 10px;
+.rightSideData > span {
+  width: 2px;
+  height: 40px;
+  position: absolute;
+  background-color: var(--purple);
+  left: -17px;
 }
 
-.milestone{
-    margin-left: 2px;
-    width: 16px;
-    height: 28px;
-    background-image: url('milestoneFlag.svg');
-    margin-right: 13px;
-    position: relative;
+.rightSideMilestoneData > .infoTask {
+  margin-left: 10px;
 }
 
-.milestone.true{
-    background-image: url('trueFlag.svg');
+.milestone {
+  margin-left: 2px;
+  width: 16px;
+  height: 28px;
+  background-image: url('milestoneFlag.svg');
+  margin-right: 13px;
+  position: relative;
 }
 
-.milestone > span{
-    width: 2px;
-    height: 40px;
-    background-color: var(--purple);
-    left: -12px;
+.milestone.true {
+  background-image: url('trueFlag.svg');
 }
 
-.editTask{
-    width: 24px;
-    height: 21px;
-    background-image: url('purpedit_icon.svg');
-    cursor: pointer;
-    margin-right: 10px;
+.milestone > span {
+  width: 2px;
+  height: 40px;
+  background-color: var(--purple);
+  left: -12px;
 }
 
-.trashTask{
-    width: 21px;
-    height: 21px;
-    background-image: url('trash_Logo.svg');
-    margin-right: 10px;
+.editTask {
+  width: 24px;
+  height: 21px;
+  background-image: url('purpedit_icon.svg');
+  cursor: pointer;
+  margin-right: 10px;
 }
 
-.infoTask{
-    width: 21px;
-    height: 21px;
-    background-image: url('info_Icon.svg');
+.trashTask {
+  width: 21px;
+  height: 21px;
+  background-image: url('trash_Logo.svg');
+  margin-right: 10px;
+}
+
+.infoTask {
+  width: 21px;
+  height: 21px;
+  background-image: url('info_Icon.svg');
 }
 
 .editTask,
 .trashTask,
-.infoTask{
-    cursor: pointer;
-    transition: transform 0.2s;
-    z-index: 2;
+.infoTask {
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 2;
+  background-color: transparent;
 }
 
 .editTask:hover,
 .trashTask:hover,
-.infoTask:hover{
-    z-index: 1;
-    transform: scale(1.3);
+.infoTask:hover {
+  z-index: 1;
+  transform: scale(1.3);
 }
 
-.dropdown.hide{
-    visibility: hidden;
+.dropdown.hide {
+  visibility: hidden;
 }
 
-.sortContainer{
-    width: 147px;
-    position: absolute;
-    top: 30px;
-    left: -1px;
-    display: flex;
-    flex-direction: column;
-    visibility: hidden;
-    transition: top 0.2s ease
+.sortContainer {
+  width: 147px;
+  position: absolute;
+  top: 30px;
+  left: -1px;
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  transition: top 0.2s ease;
 }
 
-.sortOptions{
-    background-color: var(--sidebar);
-    width: 100%;
-    height: 34px;
-    transition: background-color 0.1s, color 0.1s;
+.sortOptions {
+  background-color: var(--sidebar);
+  width: 100%;
+  height: 34px;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 }
 
-.sortOptions:first-child{
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+.sortOptions:first-child {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
 }
 
-.sortOptions:last-child{
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+.sortOptions:last-child {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
 }
 
-.sortOptions{
-    border-top: 1px solid var(--sidebar);
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    z-index: 3;
-    padding: 6px 31px 5px 11px;
-    user-select: none;
+.sortOptions {
+  border-top: 1px solid var(--sidebar);
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  z-index: 3;
+  padding: 6px 31px 5px 11px;
+  user-select: none;
 }
 
-.sortOptions.active{
-    border: 1px solid var(--purple);
+.sortOptions.active {
+  border: 1px solid var(--purple);
 }
 
-.dropdown.active > .sortContainer > .sortOptions:hover{
-    background-color: var(--purple);
-    color: white;
+.dropdown.active > .sortContainer > .sortOptions:hover {
+  background-color: var(--purple);
+  color: white;
 }
 
-.dropdown.active > .sortContainer{ 
-    visibility: visible;
-    top: 34px;
+.dropdown.active > .sortContainer {
+  visibility: visible;
+  top: 34px;
 }

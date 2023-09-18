@@ -14,31 +14,31 @@
         <div class="overviewHeader">Overview</div>
 
         <div class="overviewList">
-            <div data-type="Inbox" class="overviewItem active">
+            <button type="button" data-type="Inbox" class="overviewItem active" tabindex="2">
                 <p>Inbox</p>
                 <span></span>
                 <span></span>
-            </div>
-            <div data-type="Today" class="overviewItem">
+            </button>
+            <button type="button" data-type="Today" class="overviewItem" tabindex="2">
                 <p>Today</p>
                 <span></span>
                 <span></span>
-            </div>
-            <div data-type="Week" class="overviewItem">
+            </button>
+            <button type="button" data-type="Week" class="overviewItem" tabindex="2">
                 <p>Week</p>
                 <span></span>
                 <span></span>
-            </div>
-            <div data-type="Milestone" class="overviewItem">
+            </button>
+            <button type="button" data-type="Milestone" class="overviewItem" tabindex="2">
                 <p>Milestone</p>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
 
         <div class="projectHeader" class="overviewItem">
             Project
-            <span id="addProjectButton" class="addProjectButton"></span>
+            <button id="addProjectButton" class="addProjectButton"></button>
         </div>
         <div id="projectList" class="projectList">
       
@@ -47,7 +47,7 @@
     <div class="content">
         <div class="InboxContainer">
             <div id="contentHeader" class="inboxHeader">Inbox</div>
-            <div id="dropdown" class="dropdown">
+            <button id="dropdown" class="dropdown" tabindex="3">
                 <div id="dropdownDisplay">Default</div> 
                 <div id="sortContainer" class="sortContainer">
                     <div class="sortOptions active">Default</div>
@@ -55,14 +55,14 @@
                     <div class="sortOptions">Coding</div>
                     <div class="sortOptions">Exercise</div>
                 </div>
-            </div>
+            </button>
             
         </div>
         <div class="contentBody" id="contentBody">
         </div>
         </div>
     </div>
-    <div id="addButton" class="addButton"></div>
+    <button id="addButton" class="addButton" tabindex="1"></button>
     <div id="modal" class="modal">
         <div class="modalAddContainer">
                 <div class="modalAddCard">
@@ -80,7 +80,7 @@
                             <label for="descAdd">Description</label>
                         </div>
                         <div class="dateAddContainer">
-                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2000-01-01" max="2099-12-31">
+                            <input type="date" name="" class="dateAdd" id="dateAdd" min="2023-01-01" max="2099-12-31">
                             <label for="dateAdd">Due Date</label>
                             <span>Invalid date.</span>
                         </div>

@@ -121,5 +121,5 @@ export function getProjectIdFromLocalStorage() {
 }
 
 export function saveProjectIdtoLocalStorage() {
-  localStorage.setItem('ProjectId', Project.getProjectId());
+  localStorage.setItem('projectId', Project.getProjectId());
 }

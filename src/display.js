@@ -19,6 +19,68 @@ import { deleteProject, deleteTask } from './delete.js';
 import { editProject, editMyTask } from './edit.js';
 import * as sort from './sort.js';
 
+
+const removeTabIndex = ()=>{
+  let addButton = document.getElementById('addButton')
+  let overviewItems = Array.from(document.getElementsByClassName('overviewItem'))
+  let dropdown = document.getElementById('dropdown')
+  let sortOptions = Array.from(document.getElementsByClassName('sortOptions'))
+
+  let addProjectButton = document.getElementById('addProjectButton')
+  let projects = Array.from(document.getElementsByClassName('project'))
+  let sideEditProjects = Array.from(document.getElementsByClassName('sideEditProject'))
+  let sideDeleteProjects = Array.from(document.getElementsByClassName('sideDeleteProject'))
+  let taskDatas = Array.from(document.getElementsByClassName('taskData'))
+  let editTasks = Array.from(document.getElementsByClassName('editTask'))
+  let trashTasks = Array.from(document.getElementsByClassName('trashTask'))
+  let infoTasks = Array.from(document.getElementsByClassName('infoTask'))
+
+  addButton.setAttribute('tabindex', '-1')
+  overviewItems.forEach(element => element.setAttribute('tabindex', '-1'))
+  dropdown.setAttribute('tabindex', '-1')
+  sortOptions.forEach(element=> element.setAttribute('tabindex', '-1'))
+
+  addProjectButton.setAttribute('tabindex', '-1')
+  projects.forEach(element=>element.setAttribute('tabindex', '-1'))
+  sideEditProjects.forEach(element=>element.setAttribute('tabindex', '-1'))
+  sideDeleteProjects.forEach(element=>element.setAttribute('tabindex', '-1'))
+  taskDatas.forEach(element=>element.setAttribute('tabindex', '-1'))
+  editTasks.forEach(element=>element.setAttribute('tabindex', '-1'))
+  trashTasks.forEach(element=>element.setAttribute('tabindex', '-1'))
+  infoTasks.forEach(element=>element.setAttribute('tabindex', '-1'))
+}
+
+const setTabIndex = ()=>{
+  let addButton = document.getElementById('addButton')
+  let overviewItems = Array.from(document.getElementsByClassName('overviewItem'))
+  let dropdown = document.getElementById('dropdown')
+  let sortOptions = Array.from(document.getElementsByClassName('sortOptions'))
+
+  let addProjectButton = document.getElementById('addProjectButton')
+  let projects = Array.from(document.getElementsByClassName('project'))
+  let sideEditProjects = Array.from(document.getElementsByClassName('sideEditProject'))
+  let sideDeleteProjects = Array.from(document.getElementsByClassName('sideDeleteProject'))
+  let taskDatas = Array.from(document.getElementsByClassName('taskData'))
+  let editTasks = Array.from(document.getElementsByClassName('editTask'))
+  let trashTasks = Array.from(document.getElementsByClassName('trashTask'))
+  let infoTasks = Array.from(document.getElementsByClassName('infoTask'))
+
+  addButton.setAttribute('tabindex', '1')
+  overviewItems.forEach(element => element.setAttribute('tabindex', '2'))
+  dropdown.setAttribute('tabindex', '3')
+  sortOptions.forEach(element=> element.setAttribute('tabindex', '3'))
+
+  addProjectButton.removeAttribute('tabindex')
+  projects.forEach(element=>element.removeAttribute('tabindex'))
+  sideEditProjects.forEach(element=>element.removeAttribute('tabindex'))
+  sideDeleteProjects.forEach(element=>element.removeAttribute('tabindex'))
+  taskDatas.forEach(element=>element.removeAttribute('tabindex'))
+  editTasks.forEach(element=>element.removeAttribute('tabindex'))
+  trashTasks.forEach(element=>element.removeAttribute('tabindex'))
+  infoTasks.forEach(element=>element.removeAttribute('tabindex'))
+
+}
+
 export const renderProjectSidebar = function () {
   const oldProjects = Array.from(document.getElementsByClassName('project'));
   oldProjects.forEach((item) => {
@@ -35,17 +97,18 @@ export const renderProjectSidebar = function () {
   projectList.innerHTML = '';
 
   myProject.forEach((item) => {
-    const div = document.createElement('div');
+    const div = document.createElement('button');
     div.classList.add('project');
     div.setAttribute('data-project', item.projectId);
-    const span1 = document.createElement('span');
+    const span1 = document.createElement('button');
     span1.classList.add('sideEditProject');
     span1.setAttribute('data-project-edit', item.projectId);
-    const span2 = document.createElement('span');
+    const span2 = document.createElement('button');
     span2.setAttribute('data-project-delete', item.projectId);
     span2.classList.add('sideDeleteProject');
     const span3 = document.createElement('span');
-    div.innerHTML = item.title;
+    div.textContent = (item.title.length > 9)?`${item.title.slice(0,9)}...`: item.title;
+    div.setAttribute('data-title',item.title)
     div.append(span1);
     div.append(span2);
     div.append(span3);
@@ -100,7 +163,7 @@ function displayDeleteTask(e) {
     const taskName = taskData.children[0].children[1].innerText;
     const modal = document.getElementById('modal');
     modal.classList.add('activeDeleteTask');
-
+    removeTabIndex()
     const textbody = document.getElementById('modalDeleteTaskTextBody');
     textbody.innerHTML = '';
     textbody.innerHTML = `Task ${taskName} will be deleted <span>forever<span>`;
@@ -131,6 +194,7 @@ function displayInfoTask(e) {
   dateCompletionInput.innerText = dateCompletion;
 
   modal.classList.add('activeInfoTask');
+  removeTabIndex()
 }
 
 const renderCancelInfoButton = (function () {
@@ -149,6 +213,7 @@ const renderCancelInfoButton = (function () {
     dateInput.innerHTML = '';
     dateCompletionInput.innerHTML = '';
     modal.classList.remove('activeInfoTask');
+    setTabIndex()
   });
 })();
 
@@ -169,6 +234,7 @@ const renderDeleteTaskButton = (function () {
       renderProjectContent(headerContent);
     }
     modal.classList.remove('activeDeleteTask');
+    setTabIndex()
   });
 })();
 
@@ -177,6 +243,7 @@ const renderCancelDeleteTask = (function () {
   const modal = document.getElementById('modal');
   cancelButton.addEventListener('click', () => {
     modal.classList.remove('activeDeleteTask');
+    setTabIndex()
   });
 })();
 
@@ -185,6 +252,7 @@ function displayEditTask(e) {
   const taskId = e.currentTarget.getAttribute('data-task');
   const modal = document.getElementById('modal');
   modal.classList.add('activeEditTask');
+  removeTabIndex()
   const editButton = document.getElementById('editButton');
   editButton.setAttribute('data-editTaskId', taskId);
 
@@ -249,6 +317,7 @@ const renderEditButton = (function () {
         renderProjectContent(headerContent);
       }
       modal.classList.remove('activeEditTask');
+      setTabIndex()
       add.emptyEditInputs();
     }
   });
@@ -263,6 +332,7 @@ const renderCancelEditTask = (function () {
   cancelButton.addEventListener('click', () => {
     modal.classList.remove('activeEditTask');
     add.emptyEditInputs();
+    setTabIndex()
   });
 })();
 
@@ -272,7 +342,7 @@ function displayEditProject(e) {
   const projectId = e.currentTarget.parentElement.getAttribute('data-project');
   const modal = document.getElementById('modal');
   modal.classList.add('activeEditProject');
-
+  removeTabIndex()
   const textInput = document.getElementById('projectEditTitle');
   textInput.value = projectName;
 
@@ -287,6 +357,7 @@ const renderCancelEditButton = (function () {
 
   cancelButton.addEventListener('click', () => {
     modal.classList.remove('activeEditProject');
+    setTabIndex()
     textInput.value = '';
   });
 })();
@@ -296,19 +367,22 @@ const renderEditProjectButton = (function () {
   const modal = document.getElementById('modal');
   const textInput = document.getElementById('projectEditTitle');
 
+
   editButton.addEventListener('click', () => {
     const editId = editButton.getAttribute('data-projecteditid');
     if (check.checkEditValidity()) {
       editProject(editId);
       removeActive();
       renderProjectSidebar();
-      const project = document.querySelector(`div[data-project="${editId}"]`);
+      const project = document.querySelector(`button[data-project="${editId}"]`);
       renderProjectContent(project.innerText);
       displaySortList();
       renderProjectList();
       textInput.value = '';
       project.classList.add('active');
+      textInput.classList.remove('invalid')
       modal.classList.remove('activeEditProject');
+      setTabIndex()
       console.log(myProject);
       console.log(myTask);
     }
@@ -321,7 +395,7 @@ function displayDeleteProject(e) {
   const projectId = e.currentTarget.parentElement.getAttribute('data-project');
   const modal = document.getElementById('modal');
   modal.classList.add('activeDeleteProject');
-
+  removeTabIndex()
   const textbody = document.getElementById('modalDeleteTextBody');
   textbody.innerHTML = '';
   textbody.innerHTML = `Project ${projectName} will be deleted <span>forever<span>`;
@@ -336,6 +410,7 @@ const renderCancelDeleteButton = (function () {
 
   cancelButton.addEventListener('click', () => {
     modal.classList.remove('activeDeleteProject');
+    setTabIndex()
   });
 })();
 
@@ -354,16 +429,18 @@ const renderDeleteButton = (function () {
     renderOverviewContent('Inbox');
     contentHeader.innerText = 'Inbox';
     renderProjectList();
+    setTabIndex()
   });
 })();
 
 let toggleProjectActive = function (project) {
   project = project.currentTarget;
   project = project.innerHTML;
+  let name = myProject.find(item => item.title === this.getAttribute('data-title'))
   if (project !== '') {
     removeActive();
     this.classList.add('active');
-    renderProjectContent(this.innerText);
+    renderProjectContent(name.title);
   }
 };
 
@@ -424,28 +501,31 @@ const displayProjectValidity = (function () {
       add.emptyProjectInput();
       renderProjectSidebar();
       removeActive();
+      setTabIndex()
       const project = document.querySelector(
-        `div[data-project="${Project.getProjectId()}"]`,
+        `button[data-project="${Project.getProjectId()}"]`,
       );
+      let data = myProject.find((item) => item.title === project.getAttribute('data-title'))
       project.classList.add('active');
       const header = document.getElementById('contentHeader');
       header.innerHTML = '';
-      header.innerText = project.innerText;
+      header.innerText = data.title;
     }
   });
 
   cancelButton.addEventListener('click', () => {
     modal.classList.remove('activeProject');
     add.emptyProjectInput();
+    setTabIndex()
   });
 })();
 
 const displayAddMenu = (function () {
   const addButton = document.getElementById('addButton');
   const modal = document.getElementById('modal');
-
   addButton.addEventListener('click', () => {
     modal.classList.add('active');
+    removeTabIndex()
   });
 })();
 
@@ -455,6 +535,7 @@ const displayAddProjectMenu = (function () {
 
   addProjectButton.addEventListener('click', () => {
     modal.classList.add('activeProject');
+    removeTabIndex()
   });
 })();
 
@@ -541,7 +622,7 @@ export function renderOverviewContent(contentValue) {
   );
 }
 function renderTaskData(item) {
-  const taskData = document.createElement('div');
+  const taskData = document.createElement('button');
   taskData.classList.add('taskData');
   taskData.setAttribute('data-task', item.taskId);
   if (item.dateCompletion !== '') {
@@ -599,13 +680,13 @@ function renderTaskData(item) {
     milestone.classList.add('true');
   }
 
-  const editTask = document.createElement('div');
+  const editTask = document.createElement('button');
   editTask.classList.add('editTask');
   editTask.setAttribute('data-task', item.taskId);
-  const trashTask = document.createElement('div');
+  const trashTask = document.createElement('button');
   trashTask.classList.add('trashTask');
   trashTask.setAttribute('data-task', item.taskId);
-  const infoTask = document.createElement('div');
+  const infoTask = document.createElement('button');
   infoTask.classList.add('infoTask');
   infoTask.setAttribute('data-task', item.taskId);
 
@@ -799,7 +880,7 @@ function renderMilestoneData(item) {
   const separator = document.createElement('span');
   separator.classList.add('separator');
 
-  const infoTask = document.createElement('div');
+  const infoTask = document.createElement('button');
   infoTask.classList.add('infoTask');
   infoTask.setAttribute('data-task', item.taskId);
 
@@ -849,20 +930,23 @@ function displaySortList() {
   const sortContainer = document.getElementById('sortContainer');
   sortContainer.innerHTML = '';
 
-  const sortOptionDefault = document.createElement('div');
+  const sortOptionDefault = document.createElement('button');
   sortOptionDefault.classList.add('sortOptions');
   sortOptionDefault.classList.add('active');
+  sortOptionDefault.setAttribute('tabindex','3')
   sortOptionDefault.innerHTML = 'Default';
   sortContainer.append(sortOptionDefault);
 
-  const sortOptionGeneral = document.createElement('div');
+  const sortOptionGeneral = document.createElement('button');
   sortOptionGeneral.classList.add('sortOptions');
+  sortOptionGeneral.setAttribute('tabindex','3')
   sortOptionGeneral.innerText = 'General';
   sortContainer.append(sortOptionGeneral);
   myProject.forEach((item) => {
-    const sortOption = document.createElement('div');
+    const sortOption = document.createElement('button');
     sortOption.classList.add('sortOptions');
     sortOption.innerText = item.title;
+    sortOption.setAttribute('tabindex','3')
     sortContainer.append(sortOption);
   });
 }

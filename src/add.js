@@ -57,15 +57,16 @@ export function addTask() {
   if (project === 'General') {
     emptyInputs();
     renderOverviewContent('Inbox');
-    const inbox = document.querySelector('div[data-type="Inbox"]');
+    const inbox = document.querySelector('button[data-type="Inbox"]');
     removeActive();
     inbox.classList.add('active');
   } else {
     emptyInputs();
     renderProjectContent(project);
     removeActive();
+    console.log(getSelectedProjectId(project))
     const projectDiv = document.querySelector(
-      `div[data-project="${getSelectedProjectId(project)}"]`,
+      `button[data-project="${getSelectedProjectId(project)}"]`
     );
     projectDiv.classList.add('active');
   }

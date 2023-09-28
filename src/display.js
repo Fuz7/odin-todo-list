@@ -325,6 +325,8 @@ const renderEditButton = (function () {
       } else {
         renderProjectContent(headerContent);
       }
+      const editedTask  = document.querySelector(`button[data-task="${taskId}"`)
+      editedTask.classList.add('slideright')
       modal.classList.remove('activeEditTask');
       setTabIndex()
       add.emptyEditInputs();
@@ -712,7 +714,6 @@ function renderTaskData(item) {
   rightSideData.append(infoTask);
 
   taskData.append(rightSideData);
-
   contentBody.append(taskData);
 }
 

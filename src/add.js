@@ -60,6 +60,8 @@ export function addTask() {
     const inbox = document.querySelector('button[data-type="Inbox"]');
     removeActive();
     inbox.classList.add('active');
+    const newTask  = document.querySelector(`button[data-task="${Task.getTaskId()}"`)
+    newTask.classList.add('slideright')
   } else {
     emptyInputs();
     renderProjectContent(project);
@@ -68,6 +70,8 @@ export function addTask() {
       `button[data-project="${getSelectedProjectId(project)}"]`
     );
     projectDiv.classList.add('active');
+    const newTask  = document.querySelector(`button[data-task="${Task.getTaskId()}"`)
+    newTask.classList.add('slideright')
   }
   saveMyTaskToLocalStorage();
   saveTaskIdtoLocalStorage();

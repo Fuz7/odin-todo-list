@@ -50,6 +50,15 @@ const removeTabIndex = ()=>{
   infoTasks.forEach(element=>element.setAttribute('tabindex', '-1'))
 }
 
+const minimizeTab = (()=>{
+  let menuBar = document.getElementById('menuBar')
+  let body = document.getElementById('body')
+  menuBar.addEventListener('click', ()=>{
+    
+    body.classList.toggle('minimizedSidebar')
+  })
+})()
+
 const setTabIndex = ()=>{
   let addButton = document.getElementById('addButton')
   let overviewItems = Array.from(document.getElementsByClassName('overviewItem'))
@@ -383,8 +392,6 @@ const renderEditProjectButton = (function () {
       textInput.classList.remove('invalid')
       modal.classList.remove('activeEditProject');
       setTabIndex()
-      console.log(myProject);
-      console.log(myTask);
     }
   });
 })();
@@ -603,7 +610,6 @@ export function renderOverviewContent(contentValue) {
   } else if (contentValue === 'Week') {
     sort.sortWeek();
   }
-  console.log(mySortedTask);
 
   mySortedTask.forEach((item) => {
     if (item.removed !== true) renderTaskData(item);
@@ -778,7 +784,6 @@ export function renderProjectContent(contentValue) {
   const contentBody = document.getElementById('contentBody');
   contentBody.innerHTML = '';
 
-  console.log(mySortedTask);
 
   displaySortList();
   mySortedTask.forEach((item) => {
@@ -998,7 +1003,6 @@ function renderSortedContent() {
   );
 
   sort.sortByProject(this.innerText);
-  console.log(mySortedTask);
   const contentBody = document.getElementById('contentBody');
   contentBody.innerHTML = '';
   const dropdowntext = document.getElementById('dropdownDisplay');

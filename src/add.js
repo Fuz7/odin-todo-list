@@ -64,7 +64,6 @@ export function addTask() {
     emptyInputs();
     renderProjectContent(project);
     removeActive();
-    console.log(getSelectedProjectId(project))
     const projectDiv = document.querySelector(
       `button[data-project="${getSelectedProjectId(project)}"]`
     );

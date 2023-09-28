@@ -41,10 +41,12 @@ body {
   margin: 0px;
   display: grid;
   grid-template-rows: 100px 1fr;
-  grid-template-columns: 290px 1fr;
+  grid-template-columns: min(100vw,300px) auto;
   background-color: var(--background-color);
   position: relative;
+  transition: grid-template-columns .5s ease, opacity .5s ease;
 }
+
 
 .navbar {
   grid-row: 1/2;
@@ -63,9 +65,10 @@ body {
   width: 32px;
   height: 28px;
   background-image: url('menuBar_icons.svg');
-  background-size: cover;
+  background-size: 32px 28px;
+  background-repeat: no-repeat;
   visibility: hidden;
-  cursor: default;
+  cursor: pointer;
 }
 
 .title {
@@ -85,9 +88,12 @@ body {
 .sidebar {
   grid-area: 2 / 1 /2 / 2;
   background-color: var(--sidebar);
+  min-width: 100%;
   display: flex;
   padding: 45px 17px;
   flex-direction: column;
+  overflow-x: hidden;
+  transition: padding .5s ease ;
 }
 
 .sidebar > .overviewHeader,
@@ -97,11 +103,14 @@ body {
   font-family: 'Roboto';
   font-size: 32px;
   border-bottom: 1px solid #262626;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .overviewList {
   height: fit-content;
   margin: 28px 0px;
+  max-width: 100%;
   display: grid;
   grid-template-rows: repeat(4, 40px);
   gap: 6px 0px;
@@ -110,7 +119,7 @@ body {
 
 .overviewList > button {
   border: 0px;
-
+  max-width: 100%;
   padding-left: 65px;
   font-size: 20px;
   font-family: 'Roboto';
@@ -120,6 +129,11 @@ body {
   align-items: center;
   position: relative;
   cursor: pointer;
+  overflow-x: hidden;
+}
+
+.overviewList > button > p{
+  overflow: hidden;
 }
 
 .overviewList > button:hover,
@@ -174,6 +188,7 @@ body {
   width: 27px;
   height: 27px;
   cursor: pointer;
+  overflow-x: hidden;
 }
 
 .projectList {
@@ -186,6 +201,12 @@ body {
   user-select: none;
 }
 
+.overviewHeader,
+.overviewList,
+.projectHeader,
+.projectList{
+  transition: opacity .2s ease;
+}
 .projectList > button {
   border: 0px;
   display: flex;
@@ -813,11 +834,12 @@ form {
   max-width: 1309px;
   background-color: var(--purple);
   border-radius: 2px;
-  padding: 0px 47px 0px 43px;
+  padding: 0px 27px 0px 43px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 60px;
 }
 
 .inboxHeader,
@@ -1216,4 +1238,56 @@ form {
 .dropdown.active > .sortContainer {
   visibility: visible;
   top: 34px;
+}
+
+@media screen and (max-width: 500px) {
+  .menuBar{
+    visibility: visible;
+    min-width: 54px;
+    min-height: 48px;
+
+    background-position: center center;
+    padding: 10px;
+  }  
+
+  .menuBar:hover{
+    background-color: #bdbdbd;
+  }
+
+  body.minimizedSidebar{
+    grid-template-columns: 0px auto;
+  }
+
+  body.minimizedSidebar > .sidebar > .projectList,
+  body.minimizedSidebar > .sidebar > .overviewHeader,
+  body.minimizedSidebar > .sidebar > .overviewList,
+  body.minimizedSidebar > .sidebar > .projectHeader{
+      opacity: 0;
+  }
+
+  body.minimizedSidebar > .sidebar{
+    padding: 45px 0px;
+  }
+
+  .navbar .title{
+    justify-self: start;
+    grid-column: 2/4;
+  }
+
+  .navbar{
+    grid-template-columns: 90px 1fr;
+  }
+
+  .title{
+    font-size: 36px;
+  }
+
+  .content{
+    padding: 67px 41px 0px 41px;
+  }
+
+  .taskData,.milestoneData{
+    width: 85%;
+  }
+
 }

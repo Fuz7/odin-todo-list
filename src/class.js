@@ -48,7 +48,6 @@ export class Project {
 
 Task.setTaskId(getTaskIdFromLocalStorage());
 Project.setProjectId(getProjectIdFromLocalStorage());
-console.log(Task.taskId);
 export let myTask = getMyTaskFromLocalStorage();
 export const myProject = getMyProjectFromLocalStorage();
 export let mySortedTask = [];
